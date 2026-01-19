@@ -1,1 +1,1 @@
-// This file has been renamed to .js for Prisma compatibility
+// This file is obsolete - using prisma.config.js instead

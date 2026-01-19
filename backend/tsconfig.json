@@ -25,5 +25,5 @@
       "module": "CommonJS"
     }
   },
-  "exclude": ["node_modules", "dist", "generated", "prisma.config.js"]
+  "exclude": ["node_modules", "dist", "generated", "prisma.config.js", "prisma.config.ts", "test/**/*"]
 }
