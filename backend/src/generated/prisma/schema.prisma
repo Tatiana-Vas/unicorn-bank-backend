@@ -59,40 +59,40 @@ enum DepositStatus {
 }
 
 model Parent {
-  id         String        @id
-  email      String        @unique
-  password   String
-  name       String
-  avatarUrl  String?
-  createdAt DateTime      @default(now())
+  id        String   @id
+  email     String   @unique
+  password  String
+  name      String
+  avatarUrl String?
+  createdAt DateTime @default(now())
   updatedAt DateTime
 
-  children   ParentChild[]
+  children ParentChild[]
 }
 
 model Child {
-  id           String           @id
-  name         String
-  password     String
-  birthDate    DateTime?
-  city         String?
-  locale       String?
-  newsPrompt   Boolean          @default(false)
-  createdAt    DateTime         @default(now())
-  updatedAt    DateTime
+  id         String    @id
+  name       String
+  password   String
+  birthDate  DateTime?
+  city       String?
+  locale     String?
+  newsPrompt Boolean   @default(false)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime
 
-  parents      ParentChild[]
-  spending     SpendingAccount?
-  deposits     Deposit[]
-  tasks        Task[]
+  parents       ParentChild[]
+  spending      SpendingAccount?
+  deposits      Deposit[]
+  tasks         Task[]
   taskInstances TaskInstance[]
-  requests     Request[]
-  wishlist     WishlistItem[]
+  requests      Request[]
+  wishlist      WishlistItem[]
 }
 
 model ParentChild {
-  parentId String
-  childId  String
+  parentId  String
+  childId   String
   createdAt DateTime @default(now())
 
   parent Parent @relation(fields: [parentId], references: [id])
@@ -112,48 +112,48 @@ model SpendingAccount {
 }
 
 model Deposit {
-  id            String        @id
-  amount        Decimal
-  interestRate  Float
-  startsAt      DateTime
-  endsAt        DateTime
-  status        DepositStatus @default(ACTIVE)
-  childId       String
-  createdAt     DateTime      @default(now())
+  id           String        @id
+  amount       Decimal
+  interestRate Float
+  startsAt     DateTime
+  endsAt       DateTime
+  status       DepositStatus @default(ACTIVE)
+  childId      String
+  createdAt    DateTime      @default(now())
 
-  child         Child         @relation(fields: [childId], references: [id])
-  transactions  Transaction[]
+  child        Child         @relation(fields: [childId], references: [id])
+  transactions Transaction[]
 }
 
 model Transaction {
-  id                 String            @id
-  amount             Decimal
-  source             TransactionSource
-  comment            String?
-  spendingAccountId  String?
-  depositId          String?
-  createdAt          DateTime          @default(now())
+  id                String            @id
+  amount            Decimal
+  source            TransactionSource
+  comment           String?
+  spendingAccountId String?
+  depositId         String?
+  createdAt         DateTime          @default(now())
 
   spendingAccount SpendingAccount? @relation(fields: [spendingAccountId], references: [id])
-  deposit          Deposit?         @relation(fields: [depositId], references: [id])
+  deposit         Deposit?         @relation(fields: [depositId], references: [id])
 }
 
 model Task {
-  id            String           @id
-  title         String
-  description   String?
-  reward        Decimal
-  scheduleType  TaskScheduleType
-  intervalDays  Int?
-  weekDays      Int[]
-  dayOfMonth    Int?
-  startsAt      DateTime
-  endsAt        DateTime?
-  childId       String
-  createdAt     DateTime         @default(now())
+  id           String           @id
+  title        String
+  description  String?
+  reward       Decimal
+  scheduleType TaskScheduleType
+  intervalDays Int?
+  weekDays     Int[]
+  dayOfMonth   Int?
+  startsAt     DateTime
+  endsAt       DateTime?
+  childId      String
+  createdAt    DateTime         @default(now())
 
-  child         Child            @relation(fields: [childId], references: [id])
-  instances     TaskInstance[]
+  child     Child          @relation(fields: [childId], references: [id])
+  instances TaskInstance[]
 }
 
 model TaskInstance {
