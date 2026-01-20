@@ -3189,7 +3189,7 @@ export namespace Prisma {
     birthDate: Date | null
     city: string | null
     locale: string | null
-    newsPrompt: boolean | null
+    newsPrompt: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -3201,7 +3201,7 @@ export namespace Prisma {
     birthDate: Date | null
     city: string | null
     locale: string | null
-    newsPrompt: boolean | null
+    newsPrompt: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -3336,7 +3336,7 @@ export namespace Prisma {
     birthDate: Date | null
     city: string | null
     locale: string | null
-    newsPrompt: boolean
+    newsPrompt: string | null
     createdAt: Date
     updatedAt: Date
     _count: ChildCountAggregateOutputType | null
@@ -3446,7 +3446,7 @@ export namespace Prisma {
       birthDate: Date | null
       city: string | null
       locale: string | null
-      newsPrompt: boolean
+      newsPrompt: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["child"]>
@@ -3885,7 +3885,7 @@ export namespace Prisma {
     readonly birthDate: FieldRef<"Child", 'DateTime'>
     readonly city: FieldRef<"Child", 'String'>
     readonly locale: FieldRef<"Child", 'String'>
-    readonly newsPrompt: FieldRef<"Child", 'Boolean'>
+    readonly newsPrompt: FieldRef<"Child", 'String'>
     readonly createdAt: FieldRef<"Child", 'DateTime'>
     readonly updatedAt: FieldRef<"Child", 'DateTime'>
   }
@@ -14671,13 +14671,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-  /**
    * Reference to a field of type 'Decimal'
    */
   export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
@@ -14829,6 +14822,13 @@ export namespace Prisma {
    */
   export type ListEnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole[]'>
     
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
   /**
    * Deep Input Types
    */
@@ -14909,7 +14909,7 @@ export namespace Prisma {
     birthDate?: DateTimeNullableFilter<"Child"> | Date | string | null
     city?: StringNullableFilter<"Child"> | string | null
     locale?: StringNullableFilter<"Child"> | string | null
-    newsPrompt?: BoolFilter<"Child"> | boolean
+    newsPrompt?: StringNullableFilter<"Child"> | string | null
     createdAt?: DateTimeFilter<"Child"> | Date | string
     updatedAt?: DateTimeFilter<"Child"> | Date | string
     parents?: ParentChildListRelationFilter
@@ -14928,7 +14928,7 @@ export namespace Prisma {
     birthDate?: SortOrderInput | SortOrder
     city?: SortOrderInput | SortOrder
     locale?: SortOrderInput | SortOrder
-    newsPrompt?: SortOrder
+    newsPrompt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     parents?: ParentChildOrderByRelationAggregateInput
@@ -14950,7 +14950,7 @@ export namespace Prisma {
     birthDate?: DateTimeNullableFilter<"Child"> | Date | string | null
     city?: StringNullableFilter<"Child"> | string | null
     locale?: StringNullableFilter<"Child"> | string | null
-    newsPrompt?: BoolFilter<"Child"> | boolean
+    newsPrompt?: StringNullableFilter<"Child"> | string | null
     createdAt?: DateTimeFilter<"Child"> | Date | string
     updatedAt?: DateTimeFilter<"Child"> | Date | string
     parents?: ParentChildListRelationFilter
@@ -14969,7 +14969,7 @@ export namespace Prisma {
     birthDate?: SortOrderInput | SortOrder
     city?: SortOrderInput | SortOrder
     locale?: SortOrderInput | SortOrder
-    newsPrompt?: SortOrder
+    newsPrompt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: ChildCountOrderByAggregateInput
@@ -14987,7 +14987,7 @@ export namespace Prisma {
     birthDate?: DateTimeNullableWithAggregatesFilter<"Child"> | Date | string | null
     city?: StringNullableWithAggregatesFilter<"Child"> | string | null
     locale?: StringNullableWithAggregatesFilter<"Child"> | string | null
-    newsPrompt?: BoolWithAggregatesFilter<"Child"> | boolean
+    newsPrompt?: StringNullableWithAggregatesFilter<"Child"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Child"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Child"> | Date | string
   }
@@ -15669,7 +15669,7 @@ export namespace Prisma {
     birthDate?: Date | string | null
     city?: string | null
     locale?: string | null
-    newsPrompt?: boolean
+    newsPrompt?: string | null
     createdAt?: Date | string
     updatedAt: Date | string
     parents?: ParentChildCreateNestedManyWithoutChildInput
@@ -15688,7 +15688,7 @@ export namespace Prisma {
     birthDate?: Date | string | null
     city?: string | null
     locale?: string | null
-    newsPrompt?: boolean
+    newsPrompt?: string | null
     createdAt?: Date | string
     updatedAt: Date | string
     parents?: ParentChildUncheckedCreateNestedManyWithoutChildInput
@@ -15707,7 +15707,7 @@ export namespace Prisma {
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     locale?: NullableStringFieldUpdateOperationsInput | string | null
-    newsPrompt?: BoolFieldUpdateOperationsInput | boolean
+    newsPrompt?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     parents?: ParentChildUpdateManyWithoutChildNestedInput
@@ -15726,7 +15726,7 @@ export namespace Prisma {
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     locale?: NullableStringFieldUpdateOperationsInput | string | null
-    newsPrompt?: BoolFieldUpdateOperationsInput | boolean
+    newsPrompt?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     parents?: ParentChildUncheckedUpdateManyWithoutChildNestedInput
@@ -15745,7 +15745,7 @@ export namespace Prisma {
     birthDate?: Date | string | null
     city?: string | null
     locale?: string | null
-    newsPrompt?: boolean
+    newsPrompt?: string | null
     createdAt?: Date | string
     updatedAt: Date | string
   }
@@ -15757,7 +15757,7 @@ export namespace Prisma {
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     locale?: NullableStringFieldUpdateOperationsInput | string | null
-    newsPrompt?: BoolFieldUpdateOperationsInput | boolean
+    newsPrompt?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -15769,7 +15769,7 @@ export namespace Prisma {
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     locale?: NullableStringFieldUpdateOperationsInput | string | null
-    newsPrompt?: BoolFieldUpdateOperationsInput | boolean
+    newsPrompt?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -16531,11 +16531,6 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
   export type SpendingAccountNullableScalarRelationFilter = {
     is?: SpendingAccountWhereInput | null
     isNot?: SpendingAccountWhereInput | null
@@ -16639,14 +16634,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type ParentScalarRelationFilter = {
@@ -17171,6 +17158,11 @@ export namespace Prisma {
     not?: NestedEnumUserRoleFilter<$PrismaModel> | $Enums.UserRole
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NotificationCountOrderByAggregateInput = {
     id?: SortOrder
     userRole?: SortOrder
@@ -17209,6 +17201,14 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumUserRoleFilter<$PrismaModel>
     _max?: NestedEnumUserRoleFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type WishlistItemCountOrderByAggregateInput = {
@@ -17398,10 +17398,6 @@ export namespace Prisma {
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
-  }
-
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
   }
 
   export type ParentChildUpdateManyWithoutChildNestedInput = {
@@ -17923,6 +17919,10 @@ export namespace Prisma {
     set?: $Enums.UserRole
   }
 
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
   export type ChildCreateNestedOneWithoutWishlistInput = {
     create?: XOR<ChildCreateWithoutWishlistInput, ChildUncheckedCreateWithoutWishlistInput>
     connectOrCreate?: ChildCreateOrConnectWithoutWishlistInput
@@ -18057,11 +18057,6 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
   export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -18074,14 +18069,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedDecimalFilter<$PrismaModel = never> = {
@@ -18297,6 +18284,11 @@ export namespace Prisma {
     not?: NestedEnumUserRoleFilter<$PrismaModel> | $Enums.UserRole
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NestedEnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
     in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
@@ -18305,6 +18297,14 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumUserRoleFilter<$PrismaModel>
     _max?: NestedEnumUserRoleFilter<$PrismaModel>
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type ParentChildCreateWithoutParentInput = {
@@ -18765,7 +18765,7 @@ export namespace Prisma {
     birthDate?: Date | string | null
     city?: string | null
     locale?: string | null
-    newsPrompt?: boolean
+    newsPrompt?: string | null
     createdAt?: Date | string
     updatedAt: Date | string
     spending?: SpendingAccountCreateNestedOneWithoutChildInput
@@ -18783,7 +18783,7 @@ export namespace Prisma {
     birthDate?: Date | string | null
     city?: string | null
     locale?: string | null
-    newsPrompt?: boolean
+    newsPrompt?: string | null
     createdAt?: Date | string
     updatedAt: Date | string
     spending?: SpendingAccountUncheckedCreateNestedOneWithoutChildInput
@@ -18848,7 +18848,7 @@ export namespace Prisma {
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     locale?: NullableStringFieldUpdateOperationsInput | string | null
-    newsPrompt?: BoolFieldUpdateOperationsInput | boolean
+    newsPrompt?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     spending?: SpendingAccountUpdateOneWithoutChildNestedInput
@@ -18866,7 +18866,7 @@ export namespace Prisma {
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     locale?: NullableStringFieldUpdateOperationsInput | string | null
-    newsPrompt?: BoolFieldUpdateOperationsInput | boolean
+    newsPrompt?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     spending?: SpendingAccountUncheckedUpdateOneWithoutChildNestedInput
@@ -18884,7 +18884,7 @@ export namespace Prisma {
     birthDate?: Date | string | null
     city?: string | null
     locale?: string | null
-    newsPrompt?: boolean
+    newsPrompt?: string | null
     createdAt?: Date | string
     updatedAt: Date | string
     parents?: ParentChildCreateNestedManyWithoutChildInput
@@ -18902,7 +18902,7 @@ export namespace Prisma {
     birthDate?: Date | string | null
     city?: string | null
     locale?: string | null
-    newsPrompt?: boolean
+    newsPrompt?: string | null
     createdAt?: Date | string
     updatedAt: Date | string
     parents?: ParentChildUncheckedCreateNestedManyWithoutChildInput
@@ -18964,7 +18964,7 @@ export namespace Prisma {
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     locale?: NullableStringFieldUpdateOperationsInput | string | null
-    newsPrompt?: BoolFieldUpdateOperationsInput | boolean
+    newsPrompt?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     parents?: ParentChildUpdateManyWithoutChildNestedInput
@@ -18982,7 +18982,7 @@ export namespace Prisma {
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     locale?: NullableStringFieldUpdateOperationsInput | string | null
-    newsPrompt?: BoolFieldUpdateOperationsInput | boolean
+    newsPrompt?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     parents?: ParentChildUncheckedUpdateManyWithoutChildNestedInput
@@ -19029,7 +19029,7 @@ export namespace Prisma {
     birthDate?: Date | string | null
     city?: string | null
     locale?: string | null
-    newsPrompt?: boolean
+    newsPrompt?: string | null
     createdAt?: Date | string
     updatedAt: Date | string
     parents?: ParentChildCreateNestedManyWithoutChildInput
@@ -19047,7 +19047,7 @@ export namespace Prisma {
     birthDate?: Date | string | null
     city?: string | null
     locale?: string | null
-    newsPrompt?: boolean
+    newsPrompt?: string | null
     createdAt?: Date | string
     updatedAt: Date | string
     parents?: ParentChildUncheckedCreateNestedManyWithoutChildInput
@@ -19109,7 +19109,7 @@ export namespace Prisma {
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     locale?: NullableStringFieldUpdateOperationsInput | string | null
-    newsPrompt?: BoolFieldUpdateOperationsInput | boolean
+    newsPrompt?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     parents?: ParentChildUpdateManyWithoutChildNestedInput
@@ -19127,7 +19127,7 @@ export namespace Prisma {
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     locale?: NullableStringFieldUpdateOperationsInput | string | null
-    newsPrompt?: BoolFieldUpdateOperationsInput | boolean
+    newsPrompt?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     parents?: ParentChildUncheckedUpdateManyWithoutChildNestedInput
@@ -19265,7 +19265,7 @@ export namespace Prisma {
     birthDate?: Date | string | null
     city?: string | null
     locale?: string | null
-    newsPrompt?: boolean
+    newsPrompt?: string | null
     createdAt?: Date | string
     updatedAt: Date | string
     parents?: ParentChildCreateNestedManyWithoutChildInput
@@ -19283,7 +19283,7 @@ export namespace Prisma {
     birthDate?: Date | string | null
     city?: string | null
     locale?: string | null
-    newsPrompt?: boolean
+    newsPrompt?: string | null
     createdAt?: Date | string
     updatedAt: Date | string
     parents?: ParentChildUncheckedCreateNestedManyWithoutChildInput
@@ -19343,7 +19343,7 @@ export namespace Prisma {
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     locale?: NullableStringFieldUpdateOperationsInput | string | null
-    newsPrompt?: BoolFieldUpdateOperationsInput | boolean
+    newsPrompt?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     parents?: ParentChildUpdateManyWithoutChildNestedInput
@@ -19361,7 +19361,7 @@ export namespace Prisma {
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     locale?: NullableStringFieldUpdateOperationsInput | string | null
-    newsPrompt?: BoolFieldUpdateOperationsInput | boolean
+    newsPrompt?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     parents?: ParentChildUncheckedUpdateManyWithoutChildNestedInput
@@ -19430,7 +19430,7 @@ export namespace Prisma {
     birthDate?: Date | string | null
     city?: string | null
     locale?: string | null
-    newsPrompt?: boolean
+    newsPrompt?: string | null
     createdAt?: Date | string
     updatedAt: Date | string
     parents?: ParentChildCreateNestedManyWithoutChildInput
@@ -19448,7 +19448,7 @@ export namespace Prisma {
     birthDate?: Date | string | null
     city?: string | null
     locale?: string | null
-    newsPrompt?: boolean
+    newsPrompt?: string | null
     createdAt?: Date | string
     updatedAt: Date | string
     parents?: ParentChildUncheckedCreateNestedManyWithoutChildInput
@@ -19523,7 +19523,7 @@ export namespace Prisma {
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     locale?: NullableStringFieldUpdateOperationsInput | string | null
-    newsPrompt?: BoolFieldUpdateOperationsInput | boolean
+    newsPrompt?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     parents?: ParentChildUpdateManyWithoutChildNestedInput
@@ -19541,7 +19541,7 @@ export namespace Prisma {
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     locale?: NullableStringFieldUpdateOperationsInput | string | null
-    newsPrompt?: BoolFieldUpdateOperationsInput | boolean
+    newsPrompt?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     parents?: ParentChildUncheckedUpdateManyWithoutChildNestedInput
@@ -19559,7 +19559,7 @@ export namespace Prisma {
     birthDate?: Date | string | null
     city?: string | null
     locale?: string | null
-    newsPrompt?: boolean
+    newsPrompt?: string | null
     createdAt?: Date | string
     updatedAt: Date | string
     parents?: ParentChildCreateNestedManyWithoutChildInput
@@ -19577,7 +19577,7 @@ export namespace Prisma {
     birthDate?: Date | string | null
     city?: string | null
     locale?: string | null
-    newsPrompt?: boolean
+    newsPrompt?: string | null
     createdAt?: Date | string
     updatedAt: Date | string
     parents?: ParentChildUncheckedCreateNestedManyWithoutChildInput
@@ -19611,7 +19611,7 @@ export namespace Prisma {
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     locale?: NullableStringFieldUpdateOperationsInput | string | null
-    newsPrompt?: BoolFieldUpdateOperationsInput | boolean
+    newsPrompt?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     parents?: ParentChildUpdateManyWithoutChildNestedInput
@@ -19629,7 +19629,7 @@ export namespace Prisma {
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     locale?: NullableStringFieldUpdateOperationsInput | string | null
-    newsPrompt?: BoolFieldUpdateOperationsInput | boolean
+    newsPrompt?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     parents?: ParentChildUncheckedUpdateManyWithoutChildNestedInput
@@ -19647,7 +19647,7 @@ export namespace Prisma {
     birthDate?: Date | string | null
     city?: string | null
     locale?: string | null
-    newsPrompt?: boolean
+    newsPrompt?: string | null
     createdAt?: Date | string
     updatedAt: Date | string
     parents?: ParentChildCreateNestedManyWithoutChildInput
@@ -19665,7 +19665,7 @@ export namespace Prisma {
     birthDate?: Date | string | null
     city?: string | null
     locale?: string | null
-    newsPrompt?: boolean
+    newsPrompt?: string | null
     createdAt?: Date | string
     updatedAt: Date | string
     parents?: ParentChildUncheckedCreateNestedManyWithoutChildInput
@@ -19699,7 +19699,7 @@ export namespace Prisma {
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     locale?: NullableStringFieldUpdateOperationsInput | string | null
-    newsPrompt?: BoolFieldUpdateOperationsInput | boolean
+    newsPrompt?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     parents?: ParentChildUpdateManyWithoutChildNestedInput
@@ -19717,7 +19717,7 @@ export namespace Prisma {
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     locale?: NullableStringFieldUpdateOperationsInput | string | null
-    newsPrompt?: BoolFieldUpdateOperationsInput | boolean
+    newsPrompt?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     parents?: ParentChildUncheckedUpdateManyWithoutChildNestedInput

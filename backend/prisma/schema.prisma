@@ -77,7 +77,7 @@ model Child {
   birthDate    DateTime?
   city         String?
   locale       String?
-  newsPrompt   Boolean          @default(false)
+  newsPrompt   String?
   createdAt    DateTime         @default(now())
   updatedAt    DateTime
 

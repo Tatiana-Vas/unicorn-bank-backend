@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Child" ALTER COLUMN "newsPrompt" DROP NOT NULL,
+ALTER COLUMN "newsPrompt" DROP DEFAULT,
+ALTER COLUMN "newsPrompt" SET DATA TYPE TEXT;
