@@ -1,0 +1,183 @@
+# Screen: Kid’s Requests (Parent)
+
+## Scope
+This screen allows a parent to review and process **financial requests initiated by a child**.
+The parent can approve or reject requests related to money movement and deposits.
+
+**Out of scope:**
+- Task creation and task approval (handled on a separate *Tasks* screen)
+
+---
+
+## Actors
+- **Primary actor:** Parent
+- **Secondary actor:** Child (request initiator)
+
+---
+
+## Preconditions
+- Parent is authenticated
+- At least one child profile exists
+- Child has created one or more financial requests
+- Parent has access rights to the child’s accounts
+
+---
+
+## Entry Points
+1. Bottom navigation → **Requests**
+2. Indicator of new requests on **My Kids / Kid Profile** screen (cash / purchase requests)
+3. Burger menu → **Requests** (opens Requests for the first child in the list)
+
+---
+
+## Request Types (Supported)
+- **Cash withdrawal**
+- **Purchase**
+- **Open new deposit**
+
+> Task-related requests are **not shown on this screen**.
+
+---
+
+## Screen Structure
+
+### 1. Header
+- Screen title: **Kid’s requests**
+- Child selector (tabs or carousel if multiple children)
+- Quick balances (read-only):
+  - Spending account balance
+  - Savings (total)
+
+---
+
+### 2. Requests List
+Each request row contains:
+- Request type (icon + label)
+- Short description (e.g. *cash*, *purchase – toy bear*, *open new deposit*)
+- Requested amount
+- Status indicator (new / approved / rejected)
+
+#### Amount Color Rules
+- **Red amount** — money withdrawal (Cash, Purchase)
+- **Blue amount** — money investment (Open new deposit)
+
+---
+
+### 3. Empty State
+If there are no active requests:
+- Message: **“No new requests”**
+
+---
+
+## Request Details (Modal / Bottom Sheet)
+
+### Displayed Information
+- Request type
+- Amount
+- Source account
+- Optional child comment
+- Current available balance (contextual)
+
+---
+
+### Actions
+- **Approve**
+- **Reject**
+- **Comment field (optional)**  
+  Comment is added by the parent when approving or rejecting a request.
+
+---
+
+## Business Rules
+
+### 1. Insufficient Funds Logic
+
+#### Child Side (pre-check)
+- When creating a cash or purchase request, the system checks if the selected account balance is sufficient.
+- Request can still be created if funds are sufficient at that moment.
+
+#### Parent Side (final check)
+- If multiple pending requests exist from the same account, **insufficient funds may occur during sequential approvals**.
+- In this case:
+  - Requested amount is highlighted in **red**
+  - **Approve / Withdraw button is disabled**
+  - Tooltip or helper text explains: *“Insufficient funds”*
+
+---
+
+### 2. Cash & Purchase Approval
+- On approval:
+  - Money is withdrawn from the selected account
+  - Transaction is recorded
+- On rejection:
+  - Request is marked as rejected
+  - No balance changes occur
+
+---
+
+### 3. Open New Deposit Request
+
+#### From Requests List
+- Tap on **Open new deposit** request →
+  Navigate to **Kid’s Accounts → Open new deposit**
+
+#### Pre-filled Data
+- Deposit amount (from request)
+- Start date = today (editable)
+- Parent can modify parameters before confirmation
+
+---
+
+### 4. Withdrawal from Deposit
+If a request requires withdrawing money from a **deposit account**:
+- Deposit closing process is initiated automatically
+- Accrued interest is calculated
+- Remaining amount (after withdrawal) is transferred to the **Spending Account**
+- Confirmation modal is shown before execution
+
+---
+
+## Use Cases
+
+### UC-PARENT-REQ-01: View Requests
+**Actor:** Parent  
+**Description:** Parent views a list of child’s financial requests.  
+**Result:** Requests are displayed or empty state is shown.
+
+---
+
+### UC-PARENT-REQ-02: Approve Cash / Purchase Request
+**Actor:** Parent  
+**Precondition:** Sufficient funds available at approval moment  
+**Result:** Money is withdrawn, request marked as approved.
+
+---
+
+### UC-PARENT-REQ-03: Reject Request
+**Actor:** Parent  
+**Result:** Request marked as rejected, optional parent comment saved.
+
+---
+
+### UC-PARENT-REQ-04: Handle Insufficient Funds
+**Actor:** Parent  
+**Condition:** Funds became insufficient due to earlier approvals  
+**Result:** Approval action disabled, explanatory message shown.
+
+---
+
+### UC-PARENT-REQ-05: Open Deposit from Request
+**Actor:** Parent  
+**Result:** Redirect to *Open new deposit* screen with pre-filled data.
+
+---
+
+## Navigation
+- Back → returns to previous screen (Home / My Kids)
+- Successful approval/rejection → request status updates in list
+
+---
+
+## Notes
+- Request comments are **parent-facing only**
+- Child sees only final result (approved / rejected)

@@ -1,0 +1,179 @@
+# Screen Specification
+
+## Screen name
+**My Accounts (Child)**
+
+## Scope
+The screen is designed for the **child** and is used to:
+
+- View balances of:
+  - Spending account
+  - Savings accounts (deposits)
+- Create requests to the parent:
+  - Cash withdrawal
+  - Purchase request
+  - New deposit
+- View **transaction history of the Spending account**
+
+The screen **does not allow** the child to execute financial operations directly.  
+All actions are created as **requests** and require **parent approval**.
+
+---
+
+## Actors
+- **Primary actor:** Child
+- **Secondary actor:** Parent (approval, outside of this screen)
+
+---
+
+## Preconditions
+- Child is authenticated
+- Child has at least:
+  - One Spending account
+  - (Optional) one or more Savings accounts
+
+---
+
+## Entry points
+1. Bottom navigation → **My accounts**
+2. Child Profile → **My accounts**
+3. Home screen → **My accounts** icon
+
+---
+
+## Screen structure
+
+### 1. Spending Account (summary block)
+Displayed:
+- Account name
+- Current balance
+
+**Available actions:**
+- Cash withdrawal
+- Purchase request
+- New deposit
+- View transaction history (Spending account)
+
+---
+
+### 2. Savings Accounts list
+For each deposit displayed:
+- Account name
+- End date
+- Deposit amount
+- Accrued interest
+- Interest rate
+
+Savings accounts are **read-only** for the child.
+
+---
+
+### 3. Transactions list (Spending Account)
+Transaction history includes:
+- Approved cash withdrawals
+- Approved purchases
+- Incoming transactions (tasks, gifts, birthday, etc.)
+
+**Color logic:**
+- Minus (withdrawal / purchase) — **red**
+- Plus (income) — **green**
+- Pending requests are **not** shown as transactions
+
+---
+
+## Use cases
+
+### UC-1: Cash withdrawal request
+**Description:**  
+The child creates a request to receive cash.
+
+**Flow:**
+1. Child taps **Cash withdrawal**
+2. Request screen opens
+3. Child enters:
+   - Amount
+   - Source account (Spending)
+   - Optional: request to close **any** Savings account
+4. System validates:
+   - Requested amount ≤ available balance of selected account
+5. Child submits the request
+
+**Result:**
+- `CashWithdrawalRequest` is created
+- Status: `pending_parent_approval`
+
+---
+
+### UC-2: Purchase request
+**Description:**  
+The child creates a request for a purchase.
+
+**Flow:**
+1. Child taps **Purchase request**
+2. Request screen opens
+3. Child enters:
+   - Description / link (required)
+   - Amount
+   - Source account (Spending)
+   - Optional: request to close **any** Savings account
+4. System validates:
+   - Requested amount ≤ available balance of selected account
+5. Child submits the request
+
+**Result:**
+- `PurchaseRequest` is created
+- Status: `pending_parent_approval`
+
+---
+
+### UC-3: New deposit request
+**Description:**  
+The child requests opening a new deposit.
+
+**Flow:**
+1. Child taps **New deposit**
+2. Request screen opens
+3. Child enters:
+   - Amount
+   - Source: Cash or Spending account
+4. Child submits the request
+
+**Rules:**
+- Child does **not** select deposit term or interest rate
+- Deposit conditions are defined by parent settings
+
+**Result:**
+- `DepositRequest` is created
+- Status: `pending_parent_approval`
+
+---
+
+## Validation rules
+- All cash and purchase requests **always require parent approval**
+- No limits or auto-approval logic
+- If requested amount > available balance:
+  - Submit button is **disabled**
+- Request to close a deposit:
+  - Available for **any** Savings account
+  - Handled as part of the parent approval flow
+
+---
+
+## Permissions
+
+**Child can:**
+- Create requests
+- View balances
+- View Spending account transaction history
+
+**Child cannot:**
+- Execute transactions
+- Close deposits directly
+- Edit approved or pending requests
+
+---
+
+## Notes
+- Cash withdrawal and Purchase requests share identical backend logic
+- Difference is only the required **description field** for Purchase
+- Savings account lifecycle is fully controlled by the parent
