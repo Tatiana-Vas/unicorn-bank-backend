@@ -36,6 +36,7 @@ enum TaskCompletionStatus {
   COMPLETED
   APPROVED
   REJECTED
+  DECLINED_BY_CHILD
   EXPIRED
 }
 
