@@ -11,17 +11,17 @@ export class AuthController {
 
   @Post('register')
   async register(@Body() registerDto: RegisterDto) {
-    return this.authService.register(registerDto);
+    return this.authService.registerUser(registerDto);
   }
 
   @Post('login')
   async login(@Body() loginDto: LoginDto) {
-    return this.authService.login(loginDto);
+    return this.authService.validateUser(loginDto.email, loginDto.password);
   }
 
   @Post('child/join')
   async joinChild(@Body() joinChildDto: JoinChildDto) {
-    return this.authService.joinChild(joinChildDto);
+    return this.authService.joinChild(joinChildDto.invitationCode, joinChildDto.pin);
   }
 
   @Post('child/login')

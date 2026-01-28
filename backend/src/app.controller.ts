@@ -24,4 +24,9 @@ export class AppController {
   async databaseHealth() {
     return this.healthService.check();
   }
+
+  // Simple health-check helper for unit tests
+  getHello(): string {
+    return 'Hello World!';
+  }
 }

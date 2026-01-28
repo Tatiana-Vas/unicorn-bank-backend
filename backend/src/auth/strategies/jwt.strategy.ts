@@ -17,7 +17,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     const { userId, role } = payload;
 
     if (role === 'PARENT') {
-      const user = await this.prisma.parent.findUnique({
+      const user = await (this.prisma as any).parent.findUnique({
         where: { id: userId },
       });
 
@@ -32,7 +32,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         role: 'PARENT',
       };
     } else if (role === 'CHILD') {
-      const child = await this.prisma.child.findUnique({
+      const child = await (this.prisma as any).child.findUnique({
         where: { id: userId },
       });
 

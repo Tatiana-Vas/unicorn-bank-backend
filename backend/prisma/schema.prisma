@@ -60,19 +60,20 @@ enum DepositStatus {
 }
 
 model Parent {
-  id         String        @id
+  id         String        @id @default(cuid())
   email      String        @unique
   password   String
   name       String
   avatarUrl  String?
   createdAt DateTime      @default(now())
-  updatedAt DateTime
+  updatedAt DateTime      @updatedAt
 
-  children   ParentChild[]
+  children       ParentChild[]
+  invitations    InvitationCode[]
 }
 
 model Child {
-  id           String           @id
+  id           String           @id @default(cuid())
   name         String
   password     String
   birthDate    DateTime?
@@ -80,7 +81,7 @@ model Child {
   locale       String?
   newsPrompt   String?
   createdAt    DateTime         @default(now())
-  updatedAt    DateTime
+  updatedAt    DateTime         @updatedAt
 
   parents      ParentChild[]
   spending     SpendingAccount?
@@ -103,8 +104,7 @@ model ParentChild {
 }
 
 model SpendingAccount {
-  id        String   @id
-  balance   Decimal  @default(0)
+  id        String   @id @default(cuid())
   childId   String   @unique
   createdAt DateTime @default(now())
 
@@ -113,7 +113,7 @@ model SpendingAccount {
 }
 
 model Deposit {
-  id            String        @id
+  id            String        @id @default(cuid())
   amount        Decimal
   interestRate  Float
   startsAt      DateTime
@@ -121,6 +121,7 @@ model Deposit {
   status        DepositStatus @default(ACTIVE)
   childId       String
   createdAt     DateTime      @default(now())
+  closedAt      DateTime?
 
   child         Child         @relation(fields: [childId], references: [id])
   transactions  Transaction[]
@@ -140,7 +141,7 @@ model Transaction {
 }
 
 model Task {
-  id            String           @id
+  id            String           @id @default(cuid())
   title         String
   description   String?
   reward        Decimal
@@ -158,19 +159,21 @@ model Task {
 }
 
 model TaskInstance {
-  id        String               @id
-  date      DateTime
-  status    TaskCompletionStatus @default(NEW)
-  taskId    String
-  childId   String
-  createdAt DateTime             @default(now())
+  id          String               @id @default(cuid())
+  date        DateTime
+  status      TaskCompletionStatus @default(NEW)
+  taskId      String
+  childId     String
+  createdAt   DateTime             @default(now())
+  approvedAt  DateTime?
+  expiredAt   DateTime?
 
   task  Task  @relation(fields: [taskId], references: [id])
   child Child @relation(fields: [childId], references: [id])
 }
 
 model Request {
-  id         String        @id
+  id         String        @id @default(cuid())
   type       RequestType
   status     RequestStatus @default(PENDING)
   childId    String
@@ -182,7 +185,7 @@ model Request {
 }
 
 model Notification {
-  id        String   @id
+  id        String   @id @default(cuid())
   userRole  UserRole
   userId    String
   title     String
@@ -192,7 +195,7 @@ model Notification {
 }
 
 model WishlistItem {
-  id        String   @id
+  id        String   @id @default(cuid())
   title     String
   price     Decimal
   imageUrl  String?
@@ -200,4 +203,14 @@ model WishlistItem {
   createdAt DateTime @default(now())
 
   child Child @relation(fields: [childId], references: [id])
+}
+
+model InvitationCode {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  usedAt    DateTime?
+  parentId  String
+  createdAt DateTime @default(now())
+
+  parent Parent @relation(fields: [parentId], references: [id])
 }

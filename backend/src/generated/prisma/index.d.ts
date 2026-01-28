@@ -68,6 +68,11 @@ export type Notification = $Result.DefaultSelection<Prisma.$NotificationPayload>
  * 
  */
 export type WishlistItem = $Result.DefaultSelection<Prisma.$WishlistItemPayload>
+/**
+ * Model InvitationCode
+ * 
+ */
+export type InvitationCode = $Result.DefaultSelection<Prisma.$InvitationCodePayload>
 
 /**
  * Enums
@@ -401,6 +406,16 @@ export class PrismaClient<
     * ```
     */
   get wishlistItem(): Prisma.WishlistItemDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.invitationCode`: Exposes CRUD operations for the **InvitationCode** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more InvitationCodes
+    * const invitationCodes = await prisma.invitationCode.findMany()
+    * ```
+    */
+  get invitationCode(): Prisma.InvitationCodeDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -845,7 +860,8 @@ export namespace Prisma {
     TaskInstance: 'TaskInstance',
     Request: 'Request',
     Notification: 'Notification',
-    WishlistItem: 'WishlistItem'
+    WishlistItem: 'WishlistItem',
+    InvitationCode: 'InvitationCode'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -861,7 +877,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "parent" | "child" | "parentChild" | "spendingAccount" | "deposit" | "transaction" | "task" | "taskInstance" | "request" | "notification" | "wishlistItem"
+      modelProps: "parent" | "child" | "parentChild" | "spendingAccount" | "deposit" | "transaction" | "task" | "taskInstance" | "request" | "notification" | "wishlistItem" | "invitationCode"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1679,6 +1695,80 @@ export namespace Prisma {
           }
         }
       }
+      InvitationCode: {
+        payload: Prisma.$InvitationCodePayload<ExtArgs>
+        fields: Prisma.InvitationCodeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.InvitationCodeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvitationCodePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.InvitationCodeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvitationCodePayload>
+          }
+          findFirst: {
+            args: Prisma.InvitationCodeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvitationCodePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.InvitationCodeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvitationCodePayload>
+          }
+          findMany: {
+            args: Prisma.InvitationCodeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvitationCodePayload>[]
+          }
+          create: {
+            args: Prisma.InvitationCodeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvitationCodePayload>
+          }
+          createMany: {
+            args: Prisma.InvitationCodeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.InvitationCodeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvitationCodePayload>[]
+          }
+          delete: {
+            args: Prisma.InvitationCodeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvitationCodePayload>
+          }
+          update: {
+            args: Prisma.InvitationCodeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvitationCodePayload>
+          }
+          deleteMany: {
+            args: Prisma.InvitationCodeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.InvitationCodeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.InvitationCodeUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvitationCodePayload>[]
+          }
+          upsert: {
+            args: Prisma.InvitationCodeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InvitationCodePayload>
+          }
+          aggregate: {
+            args: Prisma.InvitationCodeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateInvitationCode>
+          }
+          groupBy: {
+            args: Prisma.InvitationCodeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<InvitationCodeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.InvitationCodeCountArgs<ExtArgs>
+            result: $Utils.Optional<InvitationCodeCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1798,6 +1888,7 @@ export namespace Prisma {
     request?: RequestOmit
     notification?: NotificationOmit
     wishlistItem?: WishlistItemOmit
+    invitationCode?: InvitationCodeOmit
   }
 
   /* Types for Logging */
@@ -1879,10 +1970,12 @@ export namespace Prisma {
 
   export type ParentCountOutputType = {
     children: number
+    invitations: number
   }
 
   export type ParentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     children?: boolean | ParentCountOutputTypeCountChildrenArgs
+    invitations?: boolean | ParentCountOutputTypeCountInvitationsArgs
   }
 
   // Custom InputTypes
@@ -1901,6 +1994,13 @@ export namespace Prisma {
    */
   export type ParentCountOutputTypeCountChildrenArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ParentChildWhereInput
+  }
+
+  /**
+   * ParentCountOutputType without action
+   */
+  export type ParentCountOutputTypeCountInvitationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InvitationCodeWhereInput
   }
 
 
@@ -2258,6 +2358,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     children?: boolean | Parent$childrenArgs<ExtArgs>
+    invitations?: boolean | Parent$invitationsArgs<ExtArgs>
     _count?: boolean | ParentCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["parent"]>
 
@@ -2294,6 +2395,7 @@ export namespace Prisma {
   export type ParentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password" | "name" | "avatarUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["parent"]>
   export type ParentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     children?: boolean | Parent$childrenArgs<ExtArgs>
+    invitations?: boolean | Parent$invitationsArgs<ExtArgs>
     _count?: boolean | ParentCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ParentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2303,6 +2405,7 @@ export namespace Prisma {
     name: "Parent"
     objects: {
       children: Prisma.$ParentChildPayload<ExtArgs>[]
+      invitations: Prisma.$InvitationCodePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2707,6 +2810,7 @@ export namespace Prisma {
   export interface Prisma__ParentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     children<T extends Parent$childrenArgs<ExtArgs> = {}>(args?: Subset<T, Parent$childrenArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ParentChildPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    invitations<T extends Parent$invitationsArgs<ExtArgs> = {}>(args?: Subset<T, Parent$invitationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvitationCodePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3152,6 +3256,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ParentChildScalarFieldEnum | ParentChildScalarFieldEnum[]
+  }
+
+  /**
+   * Parent.invitations
+   */
+  export type Parent$invitationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvitationCode
+     */
+    select?: InvitationCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvitationCode
+     */
+    omit?: InvitationCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvitationCodeInclude<ExtArgs> | null
+    where?: InvitationCodeWhereInput
+    orderBy?: InvitationCodeOrderByWithRelationInput | InvitationCodeOrderByWithRelationInput[]
+    cursor?: InvitationCodeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: InvitationCodeScalarFieldEnum | InvitationCodeScalarFieldEnum[]
   }
 
   /**
@@ -5504,68 +5632,44 @@ export namespace Prisma {
 
   export type AggregateSpendingAccount = {
     _count: SpendingAccountCountAggregateOutputType | null
-    _avg: SpendingAccountAvgAggregateOutputType | null
-    _sum: SpendingAccountSumAggregateOutputType | null
     _min: SpendingAccountMinAggregateOutputType | null
     _max: SpendingAccountMaxAggregateOutputType | null
   }
 
-  export type SpendingAccountAvgAggregateOutputType = {
-    balance: Decimal | null
-  }
-
-  export type SpendingAccountSumAggregateOutputType = {
-    balance: Decimal | null
-  }
-
   export type SpendingAccountMinAggregateOutputType = {
     id: string | null
-    balance: Decimal | null
     childId: string | null
     createdAt: Date | null
   }
 
   export type SpendingAccountMaxAggregateOutputType = {
     id: string | null
-    balance: Decimal | null
     childId: string | null
     createdAt: Date | null
   }
 
   export type SpendingAccountCountAggregateOutputType = {
     id: number
-    balance: number
     childId: number
     createdAt: number
     _all: number
   }
 
 
-  export type SpendingAccountAvgAggregateInputType = {
-    balance?: true
-  }
-
-  export type SpendingAccountSumAggregateInputType = {
-    balance?: true
-  }
-
   export type SpendingAccountMinAggregateInputType = {
     id?: true
-    balance?: true
     childId?: true
     createdAt?: true
   }
 
   export type SpendingAccountMaxAggregateInputType = {
     id?: true
-    balance?: true
     childId?: true
     createdAt?: true
   }
 
   export type SpendingAccountCountAggregateInputType = {
     id?: true
-    balance?: true
     childId?: true
     createdAt?: true
     _all?: true
@@ -5609,18 +5713,6 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Select which fields to average
-    **/
-    _avg?: SpendingAccountAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: SpendingAccountSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
      * Select which fields to find the minimum value
     **/
     _min?: SpendingAccountMinAggregateInputType
@@ -5651,20 +5743,15 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: SpendingAccountCountAggregateInputType | true
-    _avg?: SpendingAccountAvgAggregateInputType
-    _sum?: SpendingAccountSumAggregateInputType
     _min?: SpendingAccountMinAggregateInputType
     _max?: SpendingAccountMaxAggregateInputType
   }
 
   export type SpendingAccountGroupByOutputType = {
     id: string
-    balance: Decimal
     childId: string
     createdAt: Date
     _count: SpendingAccountCountAggregateOutputType | null
-    _avg: SpendingAccountAvgAggregateOutputType | null
-    _sum: SpendingAccountSumAggregateOutputType | null
     _min: SpendingAccountMinAggregateOutputType | null
     _max: SpendingAccountMaxAggregateOutputType | null
   }
@@ -5685,7 +5772,6 @@ export namespace Prisma {
 
   export type SpendingAccountSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    balance?: boolean
     childId?: boolean
     createdAt?: boolean
     child?: boolean | ChildDefaultArgs<ExtArgs>
@@ -5695,7 +5781,6 @@ export namespace Prisma {
 
   export type SpendingAccountSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    balance?: boolean
     childId?: boolean
     createdAt?: boolean
     child?: boolean | ChildDefaultArgs<ExtArgs>
@@ -5703,7 +5788,6 @@ export namespace Prisma {
 
   export type SpendingAccountSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    balance?: boolean
     childId?: boolean
     createdAt?: boolean
     child?: boolean | ChildDefaultArgs<ExtArgs>
@@ -5711,12 +5795,11 @@ export namespace Prisma {
 
   export type SpendingAccountSelectScalar = {
     id?: boolean
-    balance?: boolean
     childId?: boolean
     createdAt?: boolean
   }
 
-  export type SpendingAccountOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "balance" | "childId" | "createdAt", ExtArgs["result"]["spendingAccount"]>
+  export type SpendingAccountOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "childId" | "createdAt", ExtArgs["result"]["spendingAccount"]>
   export type SpendingAccountInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     child?: boolean | ChildDefaultArgs<ExtArgs>
     transactions?: boolean | SpendingAccount$transactionsArgs<ExtArgs>
@@ -5737,7 +5820,6 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      balance: Prisma.Decimal
       childId: string
       createdAt: Date
     }, ExtArgs["result"]["spendingAccount"]>
@@ -6166,7 +6248,6 @@ export namespace Prisma {
    */
   interface SpendingAccountFieldRefs {
     readonly id: FieldRef<"SpendingAccount", 'String'>
-    readonly balance: FieldRef<"SpendingAccount", 'Decimal'>
     readonly childId: FieldRef<"SpendingAccount", 'String'>
     readonly createdAt: FieldRef<"SpendingAccount", 'DateTime'>
   }
@@ -6638,6 +6719,7 @@ export namespace Prisma {
     status: $Enums.DepositStatus | null
     childId: string | null
     createdAt: Date | null
+    closedAt: Date | null
   }
 
   export type DepositMaxAggregateOutputType = {
@@ -6649,6 +6731,7 @@ export namespace Prisma {
     status: $Enums.DepositStatus | null
     childId: string | null
     createdAt: Date | null
+    closedAt: Date | null
   }
 
   export type DepositCountAggregateOutputType = {
@@ -6660,6 +6743,7 @@ export namespace Prisma {
     status: number
     childId: number
     createdAt: number
+    closedAt: number
     _all: number
   }
 
@@ -6683,6 +6767,7 @@ export namespace Prisma {
     status?: true
     childId?: true
     createdAt?: true
+    closedAt?: true
   }
 
   export type DepositMaxAggregateInputType = {
@@ -6694,6 +6779,7 @@ export namespace Prisma {
     status?: true
     childId?: true
     createdAt?: true
+    closedAt?: true
   }
 
   export type DepositCountAggregateInputType = {
@@ -6705,6 +6791,7 @@ export namespace Prisma {
     status?: true
     childId?: true
     createdAt?: true
+    closedAt?: true
     _all?: true
   }
 
@@ -6803,6 +6890,7 @@ export namespace Prisma {
     status: $Enums.DepositStatus
     childId: string
     createdAt: Date
+    closedAt: Date | null
     _count: DepositCountAggregateOutputType | null
     _avg: DepositAvgAggregateOutputType | null
     _sum: DepositSumAggregateOutputType | null
@@ -6833,6 +6921,7 @@ export namespace Prisma {
     status?: boolean
     childId?: boolean
     createdAt?: boolean
+    closedAt?: boolean
     child?: boolean | ChildDefaultArgs<ExtArgs>
     transactions?: boolean | Deposit$transactionsArgs<ExtArgs>
     _count?: boolean | DepositCountOutputTypeDefaultArgs<ExtArgs>
@@ -6847,6 +6936,7 @@ export namespace Prisma {
     status?: boolean
     childId?: boolean
     createdAt?: boolean
+    closedAt?: boolean
     child?: boolean | ChildDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["deposit"]>
 
@@ -6859,6 +6949,7 @@ export namespace Prisma {
     status?: boolean
     childId?: boolean
     createdAt?: boolean
+    closedAt?: boolean
     child?: boolean | ChildDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["deposit"]>
 
@@ -6871,9 +6962,10 @@ export namespace Prisma {
     status?: boolean
     childId?: boolean
     createdAt?: boolean
+    closedAt?: boolean
   }
 
-  export type DepositOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "amount" | "interestRate" | "startsAt" | "endsAt" | "status" | "childId" | "createdAt", ExtArgs["result"]["deposit"]>
+  export type DepositOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "amount" | "interestRate" | "startsAt" | "endsAt" | "status" | "childId" | "createdAt" | "closedAt", ExtArgs["result"]["deposit"]>
   export type DepositInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     child?: boolean | ChildDefaultArgs<ExtArgs>
     transactions?: boolean | Deposit$transactionsArgs<ExtArgs>
@@ -6901,6 +6993,7 @@ export namespace Prisma {
       status: $Enums.DepositStatus
       childId: string
       createdAt: Date
+      closedAt: Date | null
     }, ExtArgs["result"]["deposit"]>
     composites: {}
   }
@@ -7334,6 +7427,7 @@ export namespace Prisma {
     readonly status: FieldRef<"Deposit", 'DepositStatus'>
     readonly childId: FieldRef<"Deposit", 'String'>
     readonly createdAt: FieldRef<"Deposit", 'DateTime'>
+    readonly closedAt: FieldRef<"Deposit", 'DateTime'>
   }
     
 
@@ -10174,6 +10268,8 @@ export namespace Prisma {
     taskId: string | null
     childId: string | null
     createdAt: Date | null
+    approvedAt: Date | null
+    expiredAt: Date | null
   }
 
   export type TaskInstanceMaxAggregateOutputType = {
@@ -10183,6 +10279,8 @@ export namespace Prisma {
     taskId: string | null
     childId: string | null
     createdAt: Date | null
+    approvedAt: Date | null
+    expiredAt: Date | null
   }
 
   export type TaskInstanceCountAggregateOutputType = {
@@ -10192,6 +10290,8 @@ export namespace Prisma {
     taskId: number
     childId: number
     createdAt: number
+    approvedAt: number
+    expiredAt: number
     _all: number
   }
 
@@ -10203,6 +10303,8 @@ export namespace Prisma {
     taskId?: true
     childId?: true
     createdAt?: true
+    approvedAt?: true
+    expiredAt?: true
   }
 
   export type TaskInstanceMaxAggregateInputType = {
@@ -10212,6 +10314,8 @@ export namespace Prisma {
     taskId?: true
     childId?: true
     createdAt?: true
+    approvedAt?: true
+    expiredAt?: true
   }
 
   export type TaskInstanceCountAggregateInputType = {
@@ -10221,6 +10325,8 @@ export namespace Prisma {
     taskId?: true
     childId?: true
     createdAt?: true
+    approvedAt?: true
+    expiredAt?: true
     _all?: true
   }
 
@@ -10303,6 +10409,8 @@ export namespace Prisma {
     taskId: string
     childId: string
     createdAt: Date
+    approvedAt: Date | null
+    expiredAt: Date | null
     _count: TaskInstanceCountAggregateOutputType | null
     _min: TaskInstanceMinAggregateOutputType | null
     _max: TaskInstanceMaxAggregateOutputType | null
@@ -10329,6 +10437,8 @@ export namespace Prisma {
     taskId?: boolean
     childId?: boolean
     createdAt?: boolean
+    approvedAt?: boolean
+    expiredAt?: boolean
     task?: boolean | TaskDefaultArgs<ExtArgs>
     child?: boolean | ChildDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["taskInstance"]>
@@ -10340,6 +10450,8 @@ export namespace Prisma {
     taskId?: boolean
     childId?: boolean
     createdAt?: boolean
+    approvedAt?: boolean
+    expiredAt?: boolean
     task?: boolean | TaskDefaultArgs<ExtArgs>
     child?: boolean | ChildDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["taskInstance"]>
@@ -10351,6 +10463,8 @@ export namespace Prisma {
     taskId?: boolean
     childId?: boolean
     createdAt?: boolean
+    approvedAt?: boolean
+    expiredAt?: boolean
     task?: boolean | TaskDefaultArgs<ExtArgs>
     child?: boolean | ChildDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["taskInstance"]>
@@ -10362,9 +10476,11 @@ export namespace Prisma {
     taskId?: boolean
     childId?: boolean
     createdAt?: boolean
+    approvedAt?: boolean
+    expiredAt?: boolean
   }
 
-  export type TaskInstanceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "status" | "taskId" | "childId" | "createdAt", ExtArgs["result"]["taskInstance"]>
+  export type TaskInstanceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "status" | "taskId" | "childId" | "createdAt" | "approvedAt" | "expiredAt", ExtArgs["result"]["taskInstance"]>
   export type TaskInstanceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     task?: boolean | TaskDefaultArgs<ExtArgs>
     child?: boolean | ChildDefaultArgs<ExtArgs>
@@ -10391,6 +10507,8 @@ export namespace Prisma {
       taskId: string
       childId: string
       createdAt: Date
+      approvedAt: Date | null
+      expiredAt: Date | null
     }, ExtArgs["result"]["taskInstance"]>
     composites: {}
   }
@@ -10822,6 +10940,8 @@ export namespace Prisma {
     readonly taskId: FieldRef<"TaskInstance", 'String'>
     readonly childId: FieldRef<"TaskInstance", 'String'>
     readonly createdAt: FieldRef<"TaskInstance", 'DateTime'>
+    readonly approvedAt: FieldRef<"TaskInstance", 'DateTime'>
+    readonly expiredAt: FieldRef<"TaskInstance", 'DateTime'>
   }
     
 
@@ -14443,6 +14563,1064 @@ export namespace Prisma {
 
 
   /**
+   * Model InvitationCode
+   */
+
+  export type AggregateInvitationCode = {
+    _count: InvitationCodeCountAggregateOutputType | null
+    _min: InvitationCodeMinAggregateOutputType | null
+    _max: InvitationCodeMaxAggregateOutputType | null
+  }
+
+  export type InvitationCodeMinAggregateOutputType = {
+    id: string | null
+    code: string | null
+    usedAt: Date | null
+    parentId: string | null
+    createdAt: Date | null
+  }
+
+  export type InvitationCodeMaxAggregateOutputType = {
+    id: string | null
+    code: string | null
+    usedAt: Date | null
+    parentId: string | null
+    createdAt: Date | null
+  }
+
+  export type InvitationCodeCountAggregateOutputType = {
+    id: number
+    code: number
+    usedAt: number
+    parentId: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type InvitationCodeMinAggregateInputType = {
+    id?: true
+    code?: true
+    usedAt?: true
+    parentId?: true
+    createdAt?: true
+  }
+
+  export type InvitationCodeMaxAggregateInputType = {
+    id?: true
+    code?: true
+    usedAt?: true
+    parentId?: true
+    createdAt?: true
+  }
+
+  export type InvitationCodeCountAggregateInputType = {
+    id?: true
+    code?: true
+    usedAt?: true
+    parentId?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type InvitationCodeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which InvitationCode to aggregate.
+     */
+    where?: InvitationCodeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InvitationCodes to fetch.
+     */
+    orderBy?: InvitationCodeOrderByWithRelationInput | InvitationCodeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: InvitationCodeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InvitationCodes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InvitationCodes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned InvitationCodes
+    **/
+    _count?: true | InvitationCodeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: InvitationCodeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: InvitationCodeMaxAggregateInputType
+  }
+
+  export type GetInvitationCodeAggregateType<T extends InvitationCodeAggregateArgs> = {
+        [P in keyof T & keyof AggregateInvitationCode]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateInvitationCode[P]>
+      : GetScalarType<T[P], AggregateInvitationCode[P]>
+  }
+
+
+
+
+  export type InvitationCodeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InvitationCodeWhereInput
+    orderBy?: InvitationCodeOrderByWithAggregationInput | InvitationCodeOrderByWithAggregationInput[]
+    by: InvitationCodeScalarFieldEnum[] | InvitationCodeScalarFieldEnum
+    having?: InvitationCodeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: InvitationCodeCountAggregateInputType | true
+    _min?: InvitationCodeMinAggregateInputType
+    _max?: InvitationCodeMaxAggregateInputType
+  }
+
+  export type InvitationCodeGroupByOutputType = {
+    id: string
+    code: string
+    usedAt: Date | null
+    parentId: string
+    createdAt: Date
+    _count: InvitationCodeCountAggregateOutputType | null
+    _min: InvitationCodeMinAggregateOutputType | null
+    _max: InvitationCodeMaxAggregateOutputType | null
+  }
+
+  type GetInvitationCodeGroupByPayload<T extends InvitationCodeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<InvitationCodeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof InvitationCodeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], InvitationCodeGroupByOutputType[P]>
+            : GetScalarType<T[P], InvitationCodeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type InvitationCodeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    code?: boolean
+    usedAt?: boolean
+    parentId?: boolean
+    createdAt?: boolean
+    parent?: boolean | ParentDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["invitationCode"]>
+
+  export type InvitationCodeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    code?: boolean
+    usedAt?: boolean
+    parentId?: boolean
+    createdAt?: boolean
+    parent?: boolean | ParentDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["invitationCode"]>
+
+  export type InvitationCodeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    code?: boolean
+    usedAt?: boolean
+    parentId?: boolean
+    createdAt?: boolean
+    parent?: boolean | ParentDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["invitationCode"]>
+
+  export type InvitationCodeSelectScalar = {
+    id?: boolean
+    code?: boolean
+    usedAt?: boolean
+    parentId?: boolean
+    createdAt?: boolean
+  }
+
+  export type InvitationCodeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "code" | "usedAt" | "parentId" | "createdAt", ExtArgs["result"]["invitationCode"]>
+  export type InvitationCodeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    parent?: boolean | ParentDefaultArgs<ExtArgs>
+  }
+  export type InvitationCodeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    parent?: boolean | ParentDefaultArgs<ExtArgs>
+  }
+  export type InvitationCodeIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    parent?: boolean | ParentDefaultArgs<ExtArgs>
+  }
+
+  export type $InvitationCodePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "InvitationCode"
+    objects: {
+      parent: Prisma.$ParentPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      code: string
+      usedAt: Date | null
+      parentId: string
+      createdAt: Date
+    }, ExtArgs["result"]["invitationCode"]>
+    composites: {}
+  }
+
+  type InvitationCodeGetPayload<S extends boolean | null | undefined | InvitationCodeDefaultArgs> = $Result.GetResult<Prisma.$InvitationCodePayload, S>
+
+  type InvitationCodeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<InvitationCodeFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: InvitationCodeCountAggregateInputType | true
+    }
+
+  export interface InvitationCodeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['InvitationCode'], meta: { name: 'InvitationCode' } }
+    /**
+     * Find zero or one InvitationCode that matches the filter.
+     * @param {InvitationCodeFindUniqueArgs} args - Arguments to find a InvitationCode
+     * @example
+     * // Get one InvitationCode
+     * const invitationCode = await prisma.invitationCode.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends InvitationCodeFindUniqueArgs>(args: SelectSubset<T, InvitationCodeFindUniqueArgs<ExtArgs>>): Prisma__InvitationCodeClient<$Result.GetResult<Prisma.$InvitationCodePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one InvitationCode that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {InvitationCodeFindUniqueOrThrowArgs} args - Arguments to find a InvitationCode
+     * @example
+     * // Get one InvitationCode
+     * const invitationCode = await prisma.invitationCode.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends InvitationCodeFindUniqueOrThrowArgs>(args: SelectSubset<T, InvitationCodeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__InvitationCodeClient<$Result.GetResult<Prisma.$InvitationCodePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first InvitationCode that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InvitationCodeFindFirstArgs} args - Arguments to find a InvitationCode
+     * @example
+     * // Get one InvitationCode
+     * const invitationCode = await prisma.invitationCode.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends InvitationCodeFindFirstArgs>(args?: SelectSubset<T, InvitationCodeFindFirstArgs<ExtArgs>>): Prisma__InvitationCodeClient<$Result.GetResult<Prisma.$InvitationCodePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first InvitationCode that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InvitationCodeFindFirstOrThrowArgs} args - Arguments to find a InvitationCode
+     * @example
+     * // Get one InvitationCode
+     * const invitationCode = await prisma.invitationCode.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends InvitationCodeFindFirstOrThrowArgs>(args?: SelectSubset<T, InvitationCodeFindFirstOrThrowArgs<ExtArgs>>): Prisma__InvitationCodeClient<$Result.GetResult<Prisma.$InvitationCodePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more InvitationCodes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InvitationCodeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all InvitationCodes
+     * const invitationCodes = await prisma.invitationCode.findMany()
+     * 
+     * // Get first 10 InvitationCodes
+     * const invitationCodes = await prisma.invitationCode.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const invitationCodeWithIdOnly = await prisma.invitationCode.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends InvitationCodeFindManyArgs>(args?: SelectSubset<T, InvitationCodeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvitationCodePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a InvitationCode.
+     * @param {InvitationCodeCreateArgs} args - Arguments to create a InvitationCode.
+     * @example
+     * // Create one InvitationCode
+     * const InvitationCode = await prisma.invitationCode.create({
+     *   data: {
+     *     // ... data to create a InvitationCode
+     *   }
+     * })
+     * 
+     */
+    create<T extends InvitationCodeCreateArgs>(args: SelectSubset<T, InvitationCodeCreateArgs<ExtArgs>>): Prisma__InvitationCodeClient<$Result.GetResult<Prisma.$InvitationCodePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many InvitationCodes.
+     * @param {InvitationCodeCreateManyArgs} args - Arguments to create many InvitationCodes.
+     * @example
+     * // Create many InvitationCodes
+     * const invitationCode = await prisma.invitationCode.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends InvitationCodeCreateManyArgs>(args?: SelectSubset<T, InvitationCodeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many InvitationCodes and returns the data saved in the database.
+     * @param {InvitationCodeCreateManyAndReturnArgs} args - Arguments to create many InvitationCodes.
+     * @example
+     * // Create many InvitationCodes
+     * const invitationCode = await prisma.invitationCode.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many InvitationCodes and only return the `id`
+     * const invitationCodeWithIdOnly = await prisma.invitationCode.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends InvitationCodeCreateManyAndReturnArgs>(args?: SelectSubset<T, InvitationCodeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvitationCodePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a InvitationCode.
+     * @param {InvitationCodeDeleteArgs} args - Arguments to delete one InvitationCode.
+     * @example
+     * // Delete one InvitationCode
+     * const InvitationCode = await prisma.invitationCode.delete({
+     *   where: {
+     *     // ... filter to delete one InvitationCode
+     *   }
+     * })
+     * 
+     */
+    delete<T extends InvitationCodeDeleteArgs>(args: SelectSubset<T, InvitationCodeDeleteArgs<ExtArgs>>): Prisma__InvitationCodeClient<$Result.GetResult<Prisma.$InvitationCodePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one InvitationCode.
+     * @param {InvitationCodeUpdateArgs} args - Arguments to update one InvitationCode.
+     * @example
+     * // Update one InvitationCode
+     * const invitationCode = await prisma.invitationCode.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends InvitationCodeUpdateArgs>(args: SelectSubset<T, InvitationCodeUpdateArgs<ExtArgs>>): Prisma__InvitationCodeClient<$Result.GetResult<Prisma.$InvitationCodePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more InvitationCodes.
+     * @param {InvitationCodeDeleteManyArgs} args - Arguments to filter InvitationCodes to delete.
+     * @example
+     * // Delete a few InvitationCodes
+     * const { count } = await prisma.invitationCode.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends InvitationCodeDeleteManyArgs>(args?: SelectSubset<T, InvitationCodeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more InvitationCodes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InvitationCodeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many InvitationCodes
+     * const invitationCode = await prisma.invitationCode.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends InvitationCodeUpdateManyArgs>(args: SelectSubset<T, InvitationCodeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more InvitationCodes and returns the data updated in the database.
+     * @param {InvitationCodeUpdateManyAndReturnArgs} args - Arguments to update many InvitationCodes.
+     * @example
+     * // Update many InvitationCodes
+     * const invitationCode = await prisma.invitationCode.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more InvitationCodes and only return the `id`
+     * const invitationCodeWithIdOnly = await prisma.invitationCode.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends InvitationCodeUpdateManyAndReturnArgs>(args: SelectSubset<T, InvitationCodeUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvitationCodePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one InvitationCode.
+     * @param {InvitationCodeUpsertArgs} args - Arguments to update or create a InvitationCode.
+     * @example
+     * // Update or create a InvitationCode
+     * const invitationCode = await prisma.invitationCode.upsert({
+     *   create: {
+     *     // ... data to create a InvitationCode
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the InvitationCode we want to update
+     *   }
+     * })
+     */
+    upsert<T extends InvitationCodeUpsertArgs>(args: SelectSubset<T, InvitationCodeUpsertArgs<ExtArgs>>): Prisma__InvitationCodeClient<$Result.GetResult<Prisma.$InvitationCodePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of InvitationCodes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InvitationCodeCountArgs} args - Arguments to filter InvitationCodes to count.
+     * @example
+     * // Count the number of InvitationCodes
+     * const count = await prisma.invitationCode.count({
+     *   where: {
+     *     // ... the filter for the InvitationCodes we want to count
+     *   }
+     * })
+    **/
+    count<T extends InvitationCodeCountArgs>(
+      args?: Subset<T, InvitationCodeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], InvitationCodeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a InvitationCode.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InvitationCodeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends InvitationCodeAggregateArgs>(args: Subset<T, InvitationCodeAggregateArgs>): Prisma.PrismaPromise<GetInvitationCodeAggregateType<T>>
+
+    /**
+     * Group by InvitationCode.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InvitationCodeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends InvitationCodeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: InvitationCodeGroupByArgs['orderBy'] }
+        : { orderBy?: InvitationCodeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, InvitationCodeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetInvitationCodeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the InvitationCode model
+   */
+  readonly fields: InvitationCodeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for InvitationCode.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__InvitationCodeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    parent<T extends ParentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ParentDefaultArgs<ExtArgs>>): Prisma__ParentClient<$Result.GetResult<Prisma.$ParentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the InvitationCode model
+   */
+  interface InvitationCodeFieldRefs {
+    readonly id: FieldRef<"InvitationCode", 'String'>
+    readonly code: FieldRef<"InvitationCode", 'String'>
+    readonly usedAt: FieldRef<"InvitationCode", 'DateTime'>
+    readonly parentId: FieldRef<"InvitationCode", 'String'>
+    readonly createdAt: FieldRef<"InvitationCode", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * InvitationCode findUnique
+   */
+  export type InvitationCodeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvitationCode
+     */
+    select?: InvitationCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvitationCode
+     */
+    omit?: InvitationCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvitationCodeInclude<ExtArgs> | null
+    /**
+     * Filter, which InvitationCode to fetch.
+     */
+    where: InvitationCodeWhereUniqueInput
+  }
+
+  /**
+   * InvitationCode findUniqueOrThrow
+   */
+  export type InvitationCodeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvitationCode
+     */
+    select?: InvitationCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvitationCode
+     */
+    omit?: InvitationCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvitationCodeInclude<ExtArgs> | null
+    /**
+     * Filter, which InvitationCode to fetch.
+     */
+    where: InvitationCodeWhereUniqueInput
+  }
+
+  /**
+   * InvitationCode findFirst
+   */
+  export type InvitationCodeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvitationCode
+     */
+    select?: InvitationCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvitationCode
+     */
+    omit?: InvitationCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvitationCodeInclude<ExtArgs> | null
+    /**
+     * Filter, which InvitationCode to fetch.
+     */
+    where?: InvitationCodeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InvitationCodes to fetch.
+     */
+    orderBy?: InvitationCodeOrderByWithRelationInput | InvitationCodeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for InvitationCodes.
+     */
+    cursor?: InvitationCodeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InvitationCodes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InvitationCodes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of InvitationCodes.
+     */
+    distinct?: InvitationCodeScalarFieldEnum | InvitationCodeScalarFieldEnum[]
+  }
+
+  /**
+   * InvitationCode findFirstOrThrow
+   */
+  export type InvitationCodeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvitationCode
+     */
+    select?: InvitationCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvitationCode
+     */
+    omit?: InvitationCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvitationCodeInclude<ExtArgs> | null
+    /**
+     * Filter, which InvitationCode to fetch.
+     */
+    where?: InvitationCodeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InvitationCodes to fetch.
+     */
+    orderBy?: InvitationCodeOrderByWithRelationInput | InvitationCodeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for InvitationCodes.
+     */
+    cursor?: InvitationCodeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InvitationCodes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InvitationCodes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of InvitationCodes.
+     */
+    distinct?: InvitationCodeScalarFieldEnum | InvitationCodeScalarFieldEnum[]
+  }
+
+  /**
+   * InvitationCode findMany
+   */
+  export type InvitationCodeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvitationCode
+     */
+    select?: InvitationCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvitationCode
+     */
+    omit?: InvitationCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvitationCodeInclude<ExtArgs> | null
+    /**
+     * Filter, which InvitationCodes to fetch.
+     */
+    where?: InvitationCodeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InvitationCodes to fetch.
+     */
+    orderBy?: InvitationCodeOrderByWithRelationInput | InvitationCodeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing InvitationCodes.
+     */
+    cursor?: InvitationCodeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InvitationCodes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InvitationCodes.
+     */
+    skip?: number
+    distinct?: InvitationCodeScalarFieldEnum | InvitationCodeScalarFieldEnum[]
+  }
+
+  /**
+   * InvitationCode create
+   */
+  export type InvitationCodeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvitationCode
+     */
+    select?: InvitationCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvitationCode
+     */
+    omit?: InvitationCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvitationCodeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a InvitationCode.
+     */
+    data: XOR<InvitationCodeCreateInput, InvitationCodeUncheckedCreateInput>
+  }
+
+  /**
+   * InvitationCode createMany
+   */
+  export type InvitationCodeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many InvitationCodes.
+     */
+    data: InvitationCodeCreateManyInput | InvitationCodeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * InvitationCode createManyAndReturn
+   */
+  export type InvitationCodeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvitationCode
+     */
+    select?: InvitationCodeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvitationCode
+     */
+    omit?: InvitationCodeOmit<ExtArgs> | null
+    /**
+     * The data used to create many InvitationCodes.
+     */
+    data: InvitationCodeCreateManyInput | InvitationCodeCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvitationCodeIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * InvitationCode update
+   */
+  export type InvitationCodeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvitationCode
+     */
+    select?: InvitationCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvitationCode
+     */
+    omit?: InvitationCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvitationCodeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a InvitationCode.
+     */
+    data: XOR<InvitationCodeUpdateInput, InvitationCodeUncheckedUpdateInput>
+    /**
+     * Choose, which InvitationCode to update.
+     */
+    where: InvitationCodeWhereUniqueInput
+  }
+
+  /**
+   * InvitationCode updateMany
+   */
+  export type InvitationCodeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update InvitationCodes.
+     */
+    data: XOR<InvitationCodeUpdateManyMutationInput, InvitationCodeUncheckedUpdateManyInput>
+    /**
+     * Filter which InvitationCodes to update
+     */
+    where?: InvitationCodeWhereInput
+    /**
+     * Limit how many InvitationCodes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * InvitationCode updateManyAndReturn
+   */
+  export type InvitationCodeUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvitationCode
+     */
+    select?: InvitationCodeSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvitationCode
+     */
+    omit?: InvitationCodeOmit<ExtArgs> | null
+    /**
+     * The data used to update InvitationCodes.
+     */
+    data: XOR<InvitationCodeUpdateManyMutationInput, InvitationCodeUncheckedUpdateManyInput>
+    /**
+     * Filter which InvitationCodes to update
+     */
+    where?: InvitationCodeWhereInput
+    /**
+     * Limit how many InvitationCodes to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvitationCodeIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * InvitationCode upsert
+   */
+  export type InvitationCodeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvitationCode
+     */
+    select?: InvitationCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvitationCode
+     */
+    omit?: InvitationCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvitationCodeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the InvitationCode to update in case it exists.
+     */
+    where: InvitationCodeWhereUniqueInput
+    /**
+     * In case the InvitationCode found by the `where` argument doesn't exist, create a new InvitationCode with this data.
+     */
+    create: XOR<InvitationCodeCreateInput, InvitationCodeUncheckedCreateInput>
+    /**
+     * In case the InvitationCode was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<InvitationCodeUpdateInput, InvitationCodeUncheckedUpdateInput>
+  }
+
+  /**
+   * InvitationCode delete
+   */
+  export type InvitationCodeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvitationCode
+     */
+    select?: InvitationCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvitationCode
+     */
+    omit?: InvitationCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvitationCodeInclude<ExtArgs> | null
+    /**
+     * Filter which InvitationCode to delete.
+     */
+    where: InvitationCodeWhereUniqueInput
+  }
+
+  /**
+   * InvitationCode deleteMany
+   */
+  export type InvitationCodeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which InvitationCodes to delete
+     */
+    where?: InvitationCodeWhereInput
+    /**
+     * Limit how many InvitationCodes to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * InvitationCode without action
+   */
+  export type InvitationCodeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InvitationCode
+     */
+    select?: InvitationCodeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InvitationCode
+     */
+    omit?: InvitationCodeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvitationCodeInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -14495,7 +15673,6 @@ export namespace Prisma {
 
   export const SpendingAccountScalarFieldEnum: {
     id: 'id',
-    balance: 'balance',
     childId: 'childId',
     createdAt: 'createdAt'
   };
@@ -14511,7 +15688,8 @@ export namespace Prisma {
     endsAt: 'endsAt',
     status: 'status',
     childId: 'childId',
-    createdAt: 'createdAt'
+    createdAt: 'createdAt',
+    closedAt: 'closedAt'
   };
 
   export type DepositScalarFieldEnum = (typeof DepositScalarFieldEnum)[keyof typeof DepositScalarFieldEnum]
@@ -14554,7 +15732,9 @@ export namespace Prisma {
     status: 'status',
     taskId: 'taskId',
     childId: 'childId',
-    createdAt: 'createdAt'
+    createdAt: 'createdAt',
+    approvedAt: 'approvedAt',
+    expiredAt: 'expiredAt'
   };
 
   export type TaskInstanceScalarFieldEnum = (typeof TaskInstanceScalarFieldEnum)[keyof typeof TaskInstanceScalarFieldEnum]
@@ -14596,6 +15776,17 @@ export namespace Prisma {
   };
 
   export type WishlistItemScalarFieldEnum = (typeof WishlistItemScalarFieldEnum)[keyof typeof WishlistItemScalarFieldEnum]
+
+
+  export const InvitationCodeScalarFieldEnum: {
+    id: 'id',
+    code: 'code',
+    usedAt: 'usedAt',
+    parentId: 'parentId',
+    createdAt: 'createdAt'
+  };
+
+  export type InvitationCodeScalarFieldEnum = (typeof InvitationCodeScalarFieldEnum)[keyof typeof InvitationCodeScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -14847,6 +16038,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Parent"> | Date | string
     updatedAt?: DateTimeFilter<"Parent"> | Date | string
     children?: ParentChildListRelationFilter
+    invitations?: InvitationCodeListRelationFilter
   }
 
   export type ParentOrderByWithRelationInput = {
@@ -14858,6 +16050,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     children?: ParentChildOrderByRelationAggregateInput
+    invitations?: InvitationCodeOrderByRelationAggregateInput
   }
 
   export type ParentWhereUniqueInput = Prisma.AtLeast<{
@@ -14872,6 +16065,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Parent"> | Date | string
     updatedAt?: DateTimeFilter<"Parent"> | Date | string
     children?: ParentChildListRelationFilter
+    invitations?: InvitationCodeListRelationFilter
   }, "id" | "email">
 
   export type ParentOrderByWithAggregationInput = {
@@ -15047,7 +16241,6 @@ export namespace Prisma {
     OR?: SpendingAccountWhereInput[]
     NOT?: SpendingAccountWhereInput | SpendingAccountWhereInput[]
     id?: StringFilter<"SpendingAccount"> | string
-    balance?: DecimalFilter<"SpendingAccount"> | Decimal | DecimalJsLike | number | string
     childId?: StringFilter<"SpendingAccount"> | string
     createdAt?: DateTimeFilter<"SpendingAccount"> | Date | string
     child?: XOR<ChildScalarRelationFilter, ChildWhereInput>
@@ -15056,7 +16249,6 @@ export namespace Prisma {
 
   export type SpendingAccountOrderByWithRelationInput = {
     id?: SortOrder
-    balance?: SortOrder
     childId?: SortOrder
     createdAt?: SortOrder
     child?: ChildOrderByWithRelationInput
@@ -15069,7 +16261,6 @@ export namespace Prisma {
     AND?: SpendingAccountWhereInput | SpendingAccountWhereInput[]
     OR?: SpendingAccountWhereInput[]
     NOT?: SpendingAccountWhereInput | SpendingAccountWhereInput[]
-    balance?: DecimalFilter<"SpendingAccount"> | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFilter<"SpendingAccount"> | Date | string
     child?: XOR<ChildScalarRelationFilter, ChildWhereInput>
     transactions?: TransactionListRelationFilter
@@ -15077,14 +16268,11 @@ export namespace Prisma {
 
   export type SpendingAccountOrderByWithAggregationInput = {
     id?: SortOrder
-    balance?: SortOrder
     childId?: SortOrder
     createdAt?: SortOrder
     _count?: SpendingAccountCountOrderByAggregateInput
-    _avg?: SpendingAccountAvgOrderByAggregateInput
     _max?: SpendingAccountMaxOrderByAggregateInput
     _min?: SpendingAccountMinOrderByAggregateInput
-    _sum?: SpendingAccountSumOrderByAggregateInput
   }
 
   export type SpendingAccountScalarWhereWithAggregatesInput = {
@@ -15092,7 +16280,6 @@ export namespace Prisma {
     OR?: SpendingAccountScalarWhereWithAggregatesInput[]
     NOT?: SpendingAccountScalarWhereWithAggregatesInput | SpendingAccountScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"SpendingAccount"> | string
-    balance?: DecimalWithAggregatesFilter<"SpendingAccount"> | Decimal | DecimalJsLike | number | string
     childId?: StringWithAggregatesFilter<"SpendingAccount"> | string
     createdAt?: DateTimeWithAggregatesFilter<"SpendingAccount"> | Date | string
   }
@@ -15109,6 +16296,7 @@ export namespace Prisma {
     status?: EnumDepositStatusFilter<"Deposit"> | $Enums.DepositStatus
     childId?: StringFilter<"Deposit"> | string
     createdAt?: DateTimeFilter<"Deposit"> | Date | string
+    closedAt?: DateTimeNullableFilter<"Deposit"> | Date | string | null
     child?: XOR<ChildScalarRelationFilter, ChildWhereInput>
     transactions?: TransactionListRelationFilter
   }
@@ -15122,6 +16310,7 @@ export namespace Prisma {
     status?: SortOrder
     childId?: SortOrder
     createdAt?: SortOrder
+    closedAt?: SortOrderInput | SortOrder
     child?: ChildOrderByWithRelationInput
     transactions?: TransactionOrderByRelationAggregateInput
   }
@@ -15138,6 +16327,7 @@ export namespace Prisma {
     status?: EnumDepositStatusFilter<"Deposit"> | $Enums.DepositStatus
     childId?: StringFilter<"Deposit"> | string
     createdAt?: DateTimeFilter<"Deposit"> | Date | string
+    closedAt?: DateTimeNullableFilter<"Deposit"> | Date | string | null
     child?: XOR<ChildScalarRelationFilter, ChildWhereInput>
     transactions?: TransactionListRelationFilter
   }, "id">
@@ -15151,6 +16341,7 @@ export namespace Prisma {
     status?: SortOrder
     childId?: SortOrder
     createdAt?: SortOrder
+    closedAt?: SortOrderInput | SortOrder
     _count?: DepositCountOrderByAggregateInput
     _avg?: DepositAvgOrderByAggregateInput
     _max?: DepositMaxOrderByAggregateInput
@@ -15170,6 +16361,7 @@ export namespace Prisma {
     status?: EnumDepositStatusWithAggregatesFilter<"Deposit"> | $Enums.DepositStatus
     childId?: StringWithAggregatesFilter<"Deposit"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Deposit"> | Date | string
+    closedAt?: DateTimeNullableWithAggregatesFilter<"Deposit"> | Date | string | null
   }
 
   export type TransactionWhereInput = {
@@ -15347,6 +16539,8 @@ export namespace Prisma {
     taskId?: StringFilter<"TaskInstance"> | string
     childId?: StringFilter<"TaskInstance"> | string
     createdAt?: DateTimeFilter<"TaskInstance"> | Date | string
+    approvedAt?: DateTimeNullableFilter<"TaskInstance"> | Date | string | null
+    expiredAt?: DateTimeNullableFilter<"TaskInstance"> | Date | string | null
     task?: XOR<TaskScalarRelationFilter, TaskWhereInput>
     child?: XOR<ChildScalarRelationFilter, ChildWhereInput>
   }
@@ -15358,6 +16552,8 @@ export namespace Prisma {
     taskId?: SortOrder
     childId?: SortOrder
     createdAt?: SortOrder
+    approvedAt?: SortOrderInput | SortOrder
+    expiredAt?: SortOrderInput | SortOrder
     task?: TaskOrderByWithRelationInput
     child?: ChildOrderByWithRelationInput
   }
@@ -15372,6 +16568,8 @@ export namespace Prisma {
     taskId?: StringFilter<"TaskInstance"> | string
     childId?: StringFilter<"TaskInstance"> | string
     createdAt?: DateTimeFilter<"TaskInstance"> | Date | string
+    approvedAt?: DateTimeNullableFilter<"TaskInstance"> | Date | string | null
+    expiredAt?: DateTimeNullableFilter<"TaskInstance"> | Date | string | null
     task?: XOR<TaskScalarRelationFilter, TaskWhereInput>
     child?: XOR<ChildScalarRelationFilter, ChildWhereInput>
   }, "id">
@@ -15383,6 +16581,8 @@ export namespace Prisma {
     taskId?: SortOrder
     childId?: SortOrder
     createdAt?: SortOrder
+    approvedAt?: SortOrderInput | SortOrder
+    expiredAt?: SortOrderInput | SortOrder
     _count?: TaskInstanceCountOrderByAggregateInput
     _max?: TaskInstanceMaxOrderByAggregateInput
     _min?: TaskInstanceMinOrderByAggregateInput
@@ -15398,6 +16598,8 @@ export namespace Prisma {
     taskId?: StringWithAggregatesFilter<"TaskInstance"> | string
     childId?: StringWithAggregatesFilter<"TaskInstance"> | string
     createdAt?: DateTimeWithAggregatesFilter<"TaskInstance"> | Date | string
+    approvedAt?: DateTimeNullableWithAggregatesFilter<"TaskInstance"> | Date | string | null
+    expiredAt?: DateTimeNullableWithAggregatesFilter<"TaskInstance"> | Date | string | null
   }
 
   export type RequestWhereInput = {
@@ -15589,26 +16791,83 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"WishlistItem"> | Date | string
   }
 
+  export type InvitationCodeWhereInput = {
+    AND?: InvitationCodeWhereInput | InvitationCodeWhereInput[]
+    OR?: InvitationCodeWhereInput[]
+    NOT?: InvitationCodeWhereInput | InvitationCodeWhereInput[]
+    id?: StringFilter<"InvitationCode"> | string
+    code?: StringFilter<"InvitationCode"> | string
+    usedAt?: DateTimeNullableFilter<"InvitationCode"> | Date | string | null
+    parentId?: StringFilter<"InvitationCode"> | string
+    createdAt?: DateTimeFilter<"InvitationCode"> | Date | string
+    parent?: XOR<ParentScalarRelationFilter, ParentWhereInput>
+  }
+
+  export type InvitationCodeOrderByWithRelationInput = {
+    id?: SortOrder
+    code?: SortOrder
+    usedAt?: SortOrderInput | SortOrder
+    parentId?: SortOrder
+    createdAt?: SortOrder
+    parent?: ParentOrderByWithRelationInput
+  }
+
+  export type InvitationCodeWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    code?: string
+    AND?: InvitationCodeWhereInput | InvitationCodeWhereInput[]
+    OR?: InvitationCodeWhereInput[]
+    NOT?: InvitationCodeWhereInput | InvitationCodeWhereInput[]
+    usedAt?: DateTimeNullableFilter<"InvitationCode"> | Date | string | null
+    parentId?: StringFilter<"InvitationCode"> | string
+    createdAt?: DateTimeFilter<"InvitationCode"> | Date | string
+    parent?: XOR<ParentScalarRelationFilter, ParentWhereInput>
+  }, "id" | "code">
+
+  export type InvitationCodeOrderByWithAggregationInput = {
+    id?: SortOrder
+    code?: SortOrder
+    usedAt?: SortOrderInput | SortOrder
+    parentId?: SortOrder
+    createdAt?: SortOrder
+    _count?: InvitationCodeCountOrderByAggregateInput
+    _max?: InvitationCodeMaxOrderByAggregateInput
+    _min?: InvitationCodeMinOrderByAggregateInput
+  }
+
+  export type InvitationCodeScalarWhereWithAggregatesInput = {
+    AND?: InvitationCodeScalarWhereWithAggregatesInput | InvitationCodeScalarWhereWithAggregatesInput[]
+    OR?: InvitationCodeScalarWhereWithAggregatesInput[]
+    NOT?: InvitationCodeScalarWhereWithAggregatesInput | InvitationCodeScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"InvitationCode"> | string
+    code?: StringWithAggregatesFilter<"InvitationCode"> | string
+    usedAt?: DateTimeNullableWithAggregatesFilter<"InvitationCode"> | Date | string | null
+    parentId?: StringWithAggregatesFilter<"InvitationCode"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"InvitationCode"> | Date | string
+  }
+
   export type ParentCreateInput = {
-    id: string
+    id?: string
     email: string
     password: string
     name: string
     avatarUrl?: string | null
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
     children?: ParentChildCreateNestedManyWithoutParentInput
+    invitations?: InvitationCodeCreateNestedManyWithoutParentInput
   }
 
   export type ParentUncheckedCreateInput = {
-    id: string
+    id?: string
     email: string
     password: string
     name: string
     avatarUrl?: string | null
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
     children?: ParentChildUncheckedCreateNestedManyWithoutParentInput
+    invitations?: InvitationCodeUncheckedCreateNestedManyWithoutParentInput
   }
 
   export type ParentUpdateInput = {
@@ -15620,6 +16879,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     children?: ParentChildUpdateManyWithoutParentNestedInput
+    invitations?: InvitationCodeUpdateManyWithoutParentNestedInput
   }
 
   export type ParentUncheckedUpdateInput = {
@@ -15631,16 +16891,17 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     children?: ParentChildUncheckedUpdateManyWithoutParentNestedInput
+    invitations?: InvitationCodeUncheckedUpdateManyWithoutParentNestedInput
   }
 
   export type ParentCreateManyInput = {
-    id: string
+    id?: string
     email: string
     password: string
     name: string
     avatarUrl?: string | null
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
   }
 
   export type ParentUpdateManyMutationInput = {
@@ -15664,7 +16925,7 @@ export namespace Prisma {
   }
 
   export type ChildCreateInput = {
-    id: string
+    id?: string
     name: string
     password: string
     birthDate?: Date | string | null
@@ -15672,7 +16933,7 @@ export namespace Prisma {
     locale?: string | null
     newsPrompt?: string | null
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
     parents?: ParentChildCreateNestedManyWithoutChildInput
     spending?: SpendingAccountCreateNestedOneWithoutChildInput
     deposits?: DepositCreateNestedManyWithoutChildInput
@@ -15683,7 +16944,7 @@ export namespace Prisma {
   }
 
   export type ChildUncheckedCreateInput = {
-    id: string
+    id?: string
     name: string
     password: string
     birthDate?: Date | string | null
@@ -15691,7 +16952,7 @@ export namespace Prisma {
     locale?: string | null
     newsPrompt?: string | null
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
     parents?: ParentChildUncheckedCreateNestedManyWithoutChildInput
     spending?: SpendingAccountUncheckedCreateNestedOneWithoutChildInput
     deposits?: DepositUncheckedCreateNestedManyWithoutChildInput
@@ -15740,7 +17001,7 @@ export namespace Prisma {
   }
 
   export type ChildCreateManyInput = {
-    id: string
+    id?: string
     name: string
     password: string
     birthDate?: Date | string | null
@@ -15748,7 +17009,7 @@ export namespace Prisma {
     locale?: string | null
     newsPrompt?: string | null
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
   }
 
   export type ChildUpdateManyMutationInput = {
@@ -15816,16 +17077,14 @@ export namespace Prisma {
   }
 
   export type SpendingAccountCreateInput = {
-    id: string
-    balance?: Decimal | DecimalJsLike | number | string
+    id?: string
     createdAt?: Date | string
     child: ChildCreateNestedOneWithoutSpendingInput
     transactions?: TransactionCreateNestedManyWithoutSpendingAccountInput
   }
 
   export type SpendingAccountUncheckedCreateInput = {
-    id: string
-    balance?: Decimal | DecimalJsLike | number | string
+    id?: string
     childId: string
     createdAt?: Date | string
     transactions?: TransactionUncheckedCreateNestedManyWithoutSpendingAccountInput
@@ -15833,7 +17092,6 @@ export namespace Prisma {
 
   export type SpendingAccountUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    balance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     child?: ChildUpdateOneRequiredWithoutSpendingNestedInput
     transactions?: TransactionUpdateManyWithoutSpendingAccountNestedInput
@@ -15841,46 +17099,43 @@ export namespace Prisma {
 
   export type SpendingAccountUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    balance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     childId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     transactions?: TransactionUncheckedUpdateManyWithoutSpendingAccountNestedInput
   }
 
   export type SpendingAccountCreateManyInput = {
-    id: string
-    balance?: Decimal | DecimalJsLike | number | string
+    id?: string
     childId: string
     createdAt?: Date | string
   }
 
   export type SpendingAccountUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    balance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type SpendingAccountUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    balance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     childId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type DepositCreateInput = {
-    id: string
+    id?: string
     amount: Decimal | DecimalJsLike | number | string
     interestRate: number
     startsAt: Date | string
     endsAt: Date | string
     status?: $Enums.DepositStatus
     createdAt?: Date | string
+    closedAt?: Date | string | null
     child: ChildCreateNestedOneWithoutDepositsInput
     transactions?: TransactionCreateNestedManyWithoutDepositInput
   }
 
   export type DepositUncheckedCreateInput = {
-    id: string
+    id?: string
     amount: Decimal | DecimalJsLike | number | string
     interestRate: number
     startsAt: Date | string
@@ -15888,6 +17143,7 @@ export namespace Prisma {
     status?: $Enums.DepositStatus
     childId: string
     createdAt?: Date | string
+    closedAt?: Date | string | null
     transactions?: TransactionUncheckedCreateNestedManyWithoutDepositInput
   }
 
@@ -15899,6 +17155,7 @@ export namespace Prisma {
     endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumDepositStatusFieldUpdateOperationsInput | $Enums.DepositStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     child?: ChildUpdateOneRequiredWithoutDepositsNestedInput
     transactions?: TransactionUpdateManyWithoutDepositNestedInput
   }
@@ -15912,11 +17169,12 @@ export namespace Prisma {
     status?: EnumDepositStatusFieldUpdateOperationsInput | $Enums.DepositStatus
     childId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     transactions?: TransactionUncheckedUpdateManyWithoutDepositNestedInput
   }
 
   export type DepositCreateManyInput = {
-    id: string
+    id?: string
     amount: Decimal | DecimalJsLike | number | string
     interestRate: number
     startsAt: Date | string
@@ -15924,6 +17182,7 @@ export namespace Prisma {
     status?: $Enums.DepositStatus
     childId: string
     createdAt?: Date | string
+    closedAt?: Date | string | null
   }
 
   export type DepositUpdateManyMutationInput = {
@@ -15934,6 +17193,7 @@ export namespace Prisma {
     endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumDepositStatusFieldUpdateOperationsInput | $Enums.DepositStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type DepositUncheckedUpdateManyInput = {
@@ -15945,6 +17205,7 @@ export namespace Prisma {
     status?: EnumDepositStatusFieldUpdateOperationsInput | $Enums.DepositStatus
     childId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type TransactionCreateInput = {
@@ -16016,7 +17277,7 @@ export namespace Prisma {
   }
 
   export type TaskCreateInput = {
-    id: string
+    id?: string
     title: string
     description?: string | null
     reward: Decimal | DecimalJsLike | number | string
@@ -16032,7 +17293,7 @@ export namespace Prisma {
   }
 
   export type TaskUncheckedCreateInput = {
-    id: string
+    id?: string
     title: string
     description?: string | null
     reward: Decimal | DecimalJsLike | number | string
@@ -16080,7 +17341,7 @@ export namespace Prisma {
   }
 
   export type TaskCreateManyInput = {
-    id: string
+    id?: string
     title: string
     description?: string | null
     reward: Decimal | DecimalJsLike | number | string
@@ -16124,21 +17385,25 @@ export namespace Prisma {
   }
 
   export type TaskInstanceCreateInput = {
-    id: string
+    id?: string
     date: Date | string
     status?: $Enums.TaskCompletionStatus
     createdAt?: Date | string
+    approvedAt?: Date | string | null
+    expiredAt?: Date | string | null
     task: TaskCreateNestedOneWithoutInstancesInput
     child: ChildCreateNestedOneWithoutTaskInstancesInput
   }
 
   export type TaskInstanceUncheckedCreateInput = {
-    id: string
+    id?: string
     date: Date | string
     status?: $Enums.TaskCompletionStatus
     taskId: string
     childId: string
     createdAt?: Date | string
+    approvedAt?: Date | string | null
+    expiredAt?: Date | string | null
   }
 
   export type TaskInstanceUpdateInput = {
@@ -16146,6 +17411,8 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumTaskCompletionStatusFieldUpdateOperationsInput | $Enums.TaskCompletionStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     task?: TaskUpdateOneRequiredWithoutInstancesNestedInput
     child?: ChildUpdateOneRequiredWithoutTaskInstancesNestedInput
   }
@@ -16157,15 +17424,19 @@ export namespace Prisma {
     taskId?: StringFieldUpdateOperationsInput | string
     childId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type TaskInstanceCreateManyInput = {
-    id: string
+    id?: string
     date: Date | string
     status?: $Enums.TaskCompletionStatus
     taskId: string
     childId: string
     createdAt?: Date | string
+    approvedAt?: Date | string | null
+    expiredAt?: Date | string | null
   }
 
   export type TaskInstanceUpdateManyMutationInput = {
@@ -16173,6 +17444,8 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumTaskCompletionStatusFieldUpdateOperationsInput | $Enums.TaskCompletionStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type TaskInstanceUncheckedUpdateManyInput = {
@@ -16182,10 +17455,12 @@ export namespace Prisma {
     taskId?: StringFieldUpdateOperationsInput | string
     childId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type RequestCreateInput = {
-    id: string
+    id?: string
     type: $Enums.RequestType
     status?: $Enums.RequestStatus
     payload: JsonNullValueInput | InputJsonValue
@@ -16195,7 +17470,7 @@ export namespace Prisma {
   }
 
   export type RequestUncheckedCreateInput = {
-    id: string
+    id?: string
     type: $Enums.RequestType
     status?: $Enums.RequestStatus
     childId: string
@@ -16225,7 +17500,7 @@ export namespace Prisma {
   }
 
   export type RequestCreateManyInput = {
-    id: string
+    id?: string
     type: $Enums.RequestType
     status?: $Enums.RequestStatus
     childId: string
@@ -16254,7 +17529,7 @@ export namespace Prisma {
   }
 
   export type NotificationCreateInput = {
-    id: string
+    id?: string
     userRole: $Enums.UserRole
     userId: string
     title: string
@@ -16264,7 +17539,7 @@ export namespace Prisma {
   }
 
   export type NotificationUncheckedCreateInput = {
-    id: string
+    id?: string
     userRole: $Enums.UserRole
     userId: string
     title: string
@@ -16294,7 +17569,7 @@ export namespace Prisma {
   }
 
   export type NotificationCreateManyInput = {
-    id: string
+    id?: string
     userRole: $Enums.UserRole
     userId: string
     title: string
@@ -16324,7 +17599,7 @@ export namespace Prisma {
   }
 
   export type WishlistItemCreateInput = {
-    id: string
+    id?: string
     title: string
     price: Decimal | DecimalJsLike | number | string
     imageUrl?: string | null
@@ -16333,7 +17608,7 @@ export namespace Prisma {
   }
 
   export type WishlistItemUncheckedCreateInput = {
-    id: string
+    id?: string
     title: string
     price: Decimal | DecimalJsLike | number | string
     imageUrl?: string | null
@@ -16360,7 +17635,7 @@ export namespace Prisma {
   }
 
   export type WishlistItemCreateManyInput = {
-    id: string
+    id?: string
     title: string
     price: Decimal | DecimalJsLike | number | string
     imageUrl?: string | null
@@ -16382,6 +17657,61 @@ export namespace Prisma {
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     childId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InvitationCodeCreateInput = {
+    id?: string
+    code: string
+    usedAt?: Date | string | null
+    createdAt?: Date | string
+    parent: ParentCreateNestedOneWithoutInvitationsInput
+  }
+
+  export type InvitationCodeUncheckedCreateInput = {
+    id?: string
+    code: string
+    usedAt?: Date | string | null
+    parentId: string
+    createdAt?: Date | string
+  }
+
+  export type InvitationCodeUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    parent?: ParentUpdateOneRequiredWithoutInvitationsNestedInput
+  }
+
+  export type InvitationCodeUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    parentId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InvitationCodeCreateManyInput = {
+    id?: string
+    code: string
+    usedAt?: Date | string | null
+    parentId: string
+    createdAt?: Date | string
+  }
+
+  export type InvitationCodeUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InvitationCodeUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    parentId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -16432,12 +17762,22 @@ export namespace Prisma {
     none?: ParentChildWhereInput
   }
 
+  export type InvitationCodeListRelationFilter = {
+    every?: InvitationCodeWhereInput
+    some?: InvitationCodeWhereInput
+    none?: InvitationCodeWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
   }
 
   export type ParentChildOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type InvitationCodeOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -16670,17 +18010,6 @@ export namespace Prisma {
     createdAt?: SortOrder
   }
 
-  export type DecimalFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
-  }
-
   export type TransactionListRelationFilter = {
     every?: TransactionWhereInput
     some?: TransactionWhereInput
@@ -16693,34 +18022,23 @@ export namespace Prisma {
 
   export type SpendingAccountCountOrderByAggregateInput = {
     id?: SortOrder
-    balance?: SortOrder
     childId?: SortOrder
     createdAt?: SortOrder
   }
 
-  export type SpendingAccountAvgOrderByAggregateInput = {
-    balance?: SortOrder
-  }
-
   export type SpendingAccountMaxOrderByAggregateInput = {
     id?: SortOrder
-    balance?: SortOrder
     childId?: SortOrder
     createdAt?: SortOrder
   }
 
   export type SpendingAccountMinOrderByAggregateInput = {
     id?: SortOrder
-    balance?: SortOrder
     childId?: SortOrder
     createdAt?: SortOrder
   }
 
-  export type SpendingAccountSumOrderByAggregateInput = {
-    balance?: SortOrder
-  }
-
-  export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
+  export type DecimalFilter<$PrismaModel = never> = {
     equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
     notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
@@ -16728,12 +18046,7 @@ export namespace Prisma {
     lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedDecimalFilter<$PrismaModel>
-    _sum?: NestedDecimalFilter<$PrismaModel>
-    _min?: NestedDecimalFilter<$PrismaModel>
-    _max?: NestedDecimalFilter<$PrismaModel>
+    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
   }
 
   export type FloatFilter<$PrismaModel = never> = {
@@ -16763,6 +18076,7 @@ export namespace Prisma {
     status?: SortOrder
     childId?: SortOrder
     createdAt?: SortOrder
+    closedAt?: SortOrder
   }
 
   export type DepositAvgOrderByAggregateInput = {
@@ -16779,6 +18093,7 @@ export namespace Prisma {
     status?: SortOrder
     childId?: SortOrder
     createdAt?: SortOrder
+    closedAt?: SortOrder
   }
 
   export type DepositMinOrderByAggregateInput = {
@@ -16790,11 +18105,28 @@ export namespace Prisma {
     status?: SortOrder
     childId?: SortOrder
     createdAt?: SortOrder
+    closedAt?: SortOrder
   }
 
   export type DepositSumOrderByAggregateInput = {
     amount?: SortOrder
     interestRate?: SortOrder
+  }
+
+  export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedDecimalFilter<$PrismaModel>
+    _sum?: NestedDecimalFilter<$PrismaModel>
+    _min?: NestedDecimalFilter<$PrismaModel>
+    _max?: NestedDecimalFilter<$PrismaModel>
   }
 
   export type FloatWithAggregatesFilter<$PrismaModel = never> = {
@@ -17011,6 +18343,8 @@ export namespace Prisma {
     taskId?: SortOrder
     childId?: SortOrder
     createdAt?: SortOrder
+    approvedAt?: SortOrder
+    expiredAt?: SortOrder
   }
 
   export type TaskInstanceMaxOrderByAggregateInput = {
@@ -17020,6 +18354,8 @@ export namespace Prisma {
     taskId?: SortOrder
     childId?: SortOrder
     createdAt?: SortOrder
+    approvedAt?: SortOrder
+    expiredAt?: SortOrder
   }
 
   export type TaskInstanceMinOrderByAggregateInput = {
@@ -17029,6 +18365,8 @@ export namespace Prisma {
     taskId?: SortOrder
     childId?: SortOrder
     createdAt?: SortOrder
+    approvedAt?: SortOrder
+    expiredAt?: SortOrder
   }
 
   export type EnumTaskCompletionStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -17247,6 +18585,30 @@ export namespace Prisma {
     price?: SortOrder
   }
 
+  export type InvitationCodeCountOrderByAggregateInput = {
+    id?: SortOrder
+    code?: SortOrder
+    usedAt?: SortOrder
+    parentId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type InvitationCodeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    code?: SortOrder
+    usedAt?: SortOrder
+    parentId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type InvitationCodeMinOrderByAggregateInput = {
+    id?: SortOrder
+    code?: SortOrder
+    usedAt?: SortOrder
+    parentId?: SortOrder
+    createdAt?: SortOrder
+  }
+
   export type ParentChildCreateNestedManyWithoutParentInput = {
     create?: XOR<ParentChildCreateWithoutParentInput, ParentChildUncheckedCreateWithoutParentInput> | ParentChildCreateWithoutParentInput[] | ParentChildUncheckedCreateWithoutParentInput[]
     connectOrCreate?: ParentChildCreateOrConnectWithoutParentInput | ParentChildCreateOrConnectWithoutParentInput[]
@@ -17254,11 +18616,25 @@ export namespace Prisma {
     connect?: ParentChildWhereUniqueInput | ParentChildWhereUniqueInput[]
   }
 
+  export type InvitationCodeCreateNestedManyWithoutParentInput = {
+    create?: XOR<InvitationCodeCreateWithoutParentInput, InvitationCodeUncheckedCreateWithoutParentInput> | InvitationCodeCreateWithoutParentInput[] | InvitationCodeUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: InvitationCodeCreateOrConnectWithoutParentInput | InvitationCodeCreateOrConnectWithoutParentInput[]
+    createMany?: InvitationCodeCreateManyParentInputEnvelope
+    connect?: InvitationCodeWhereUniqueInput | InvitationCodeWhereUniqueInput[]
+  }
+
   export type ParentChildUncheckedCreateNestedManyWithoutParentInput = {
     create?: XOR<ParentChildCreateWithoutParentInput, ParentChildUncheckedCreateWithoutParentInput> | ParentChildCreateWithoutParentInput[] | ParentChildUncheckedCreateWithoutParentInput[]
     connectOrCreate?: ParentChildCreateOrConnectWithoutParentInput | ParentChildCreateOrConnectWithoutParentInput[]
     createMany?: ParentChildCreateManyParentInputEnvelope
     connect?: ParentChildWhereUniqueInput | ParentChildWhereUniqueInput[]
+  }
+
+  export type InvitationCodeUncheckedCreateNestedManyWithoutParentInput = {
+    create?: XOR<InvitationCodeCreateWithoutParentInput, InvitationCodeUncheckedCreateWithoutParentInput> | InvitationCodeCreateWithoutParentInput[] | InvitationCodeUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: InvitationCodeCreateOrConnectWithoutParentInput | InvitationCodeCreateOrConnectWithoutParentInput[]
+    createMany?: InvitationCodeCreateManyParentInputEnvelope
+    connect?: InvitationCodeWhereUniqueInput | InvitationCodeWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -17287,6 +18663,20 @@ export namespace Prisma {
     deleteMany?: ParentChildScalarWhereInput | ParentChildScalarWhereInput[]
   }
 
+  export type InvitationCodeUpdateManyWithoutParentNestedInput = {
+    create?: XOR<InvitationCodeCreateWithoutParentInput, InvitationCodeUncheckedCreateWithoutParentInput> | InvitationCodeCreateWithoutParentInput[] | InvitationCodeUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: InvitationCodeCreateOrConnectWithoutParentInput | InvitationCodeCreateOrConnectWithoutParentInput[]
+    upsert?: InvitationCodeUpsertWithWhereUniqueWithoutParentInput | InvitationCodeUpsertWithWhereUniqueWithoutParentInput[]
+    createMany?: InvitationCodeCreateManyParentInputEnvelope
+    set?: InvitationCodeWhereUniqueInput | InvitationCodeWhereUniqueInput[]
+    disconnect?: InvitationCodeWhereUniqueInput | InvitationCodeWhereUniqueInput[]
+    delete?: InvitationCodeWhereUniqueInput | InvitationCodeWhereUniqueInput[]
+    connect?: InvitationCodeWhereUniqueInput | InvitationCodeWhereUniqueInput[]
+    update?: InvitationCodeUpdateWithWhereUniqueWithoutParentInput | InvitationCodeUpdateWithWhereUniqueWithoutParentInput[]
+    updateMany?: InvitationCodeUpdateManyWithWhereWithoutParentInput | InvitationCodeUpdateManyWithWhereWithoutParentInput[]
+    deleteMany?: InvitationCodeScalarWhereInput | InvitationCodeScalarWhereInput[]
+  }
+
   export type ParentChildUncheckedUpdateManyWithoutParentNestedInput = {
     create?: XOR<ParentChildCreateWithoutParentInput, ParentChildUncheckedCreateWithoutParentInput> | ParentChildCreateWithoutParentInput[] | ParentChildUncheckedCreateWithoutParentInput[]
     connectOrCreate?: ParentChildCreateOrConnectWithoutParentInput | ParentChildCreateOrConnectWithoutParentInput[]
@@ -17299,6 +18689,20 @@ export namespace Prisma {
     update?: ParentChildUpdateWithWhereUniqueWithoutParentInput | ParentChildUpdateWithWhereUniqueWithoutParentInput[]
     updateMany?: ParentChildUpdateManyWithWhereWithoutParentInput | ParentChildUpdateManyWithWhereWithoutParentInput[]
     deleteMany?: ParentChildScalarWhereInput | ParentChildScalarWhereInput[]
+  }
+
+  export type InvitationCodeUncheckedUpdateManyWithoutParentNestedInput = {
+    create?: XOR<InvitationCodeCreateWithoutParentInput, InvitationCodeUncheckedCreateWithoutParentInput> | InvitationCodeCreateWithoutParentInput[] | InvitationCodeUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: InvitationCodeCreateOrConnectWithoutParentInput | InvitationCodeCreateOrConnectWithoutParentInput[]
+    upsert?: InvitationCodeUpsertWithWhereUniqueWithoutParentInput | InvitationCodeUpsertWithWhereUniqueWithoutParentInput[]
+    createMany?: InvitationCodeCreateManyParentInputEnvelope
+    set?: InvitationCodeWhereUniqueInput | InvitationCodeWhereUniqueInput[]
+    disconnect?: InvitationCodeWhereUniqueInput | InvitationCodeWhereUniqueInput[]
+    delete?: InvitationCodeWhereUniqueInput | InvitationCodeWhereUniqueInput[]
+    connect?: InvitationCodeWhereUniqueInput | InvitationCodeWhereUniqueInput[]
+    update?: InvitationCodeUpdateWithWhereUniqueWithoutParentInput | InvitationCodeUpdateWithWhereUniqueWithoutParentInput[]
+    updateMany?: InvitationCodeUpdateManyWithWhereWithoutParentInput | InvitationCodeUpdateManyWithWhereWithoutParentInput[]
+    deleteMany?: InvitationCodeScalarWhereInput | InvitationCodeScalarWhereInput[]
   }
 
   export type ParentChildCreateNestedManyWithoutChildInput = {
@@ -17637,14 +19041,6 @@ export namespace Prisma {
     connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
   }
 
-  export type DecimalFieldUpdateOperationsInput = {
-    set?: Decimal | DecimalJsLike | number | string
-    increment?: Decimal | DecimalJsLike | number | string
-    decrement?: Decimal | DecimalJsLike | number | string
-    multiply?: Decimal | DecimalJsLike | number | string
-    divide?: Decimal | DecimalJsLike | number | string
-  }
-
   export type ChildUpdateOneRequiredWithoutSpendingNestedInput = {
     create?: XOR<ChildCreateWithoutSpendingInput, ChildUncheckedCreateWithoutSpendingInput>
     connectOrCreate?: ChildCreateOrConnectWithoutSpendingInput
@@ -17699,6 +19095,14 @@ export namespace Prisma {
     connectOrCreate?: TransactionCreateOrConnectWithoutDepositInput | TransactionCreateOrConnectWithoutDepositInput[]
     createMany?: TransactionCreateManyDepositInputEnvelope
     connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+  }
+
+  export type DecimalFieldUpdateOperationsInput = {
+    set?: Decimal | DecimalJsLike | number | string
+    increment?: Decimal | DecimalJsLike | number | string
+    decrement?: Decimal | DecimalJsLike | number | string
+    multiply?: Decimal | DecimalJsLike | number | string
+    divide?: Decimal | DecimalJsLike | number | string
   }
 
   export type FloatFieldUpdateOperationsInput = {
@@ -17938,6 +19342,20 @@ export namespace Prisma {
     update?: XOR<XOR<ChildUpdateToOneWithWhereWithoutWishlistInput, ChildUpdateWithoutWishlistInput>, ChildUncheckedUpdateWithoutWishlistInput>
   }
 
+  export type ParentCreateNestedOneWithoutInvitationsInput = {
+    create?: XOR<ParentCreateWithoutInvitationsInput, ParentUncheckedCreateWithoutInvitationsInput>
+    connectOrCreate?: ParentCreateOrConnectWithoutInvitationsInput
+    connect?: ParentWhereUniqueInput
+  }
+
+  export type ParentUpdateOneRequiredWithoutInvitationsNestedInput = {
+    create?: XOR<ParentCreateWithoutInvitationsInput, ParentUncheckedCreateWithoutInvitationsInput>
+    connectOrCreate?: ParentCreateOrConnectWithoutInvitationsInput
+    upsert?: ParentUpsertWithoutInvitationsInput
+    connect?: ParentWhereUniqueInput
+    update?: XOR<XOR<ParentUpdateToOneWithWhereWithoutInvitationsInput, ParentUpdateWithoutInvitationsInput>, ParentUncheckedUpdateWithoutInvitationsInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -18083,22 +19501,6 @@ export namespace Prisma {
     not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
   }
 
-  export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedDecimalFilter<$PrismaModel>
-    _sum?: NestedDecimalFilter<$PrismaModel>
-    _min?: NestedDecimalFilter<$PrismaModel>
-    _max?: NestedDecimalFilter<$PrismaModel>
-  }
-
   export type NestedFloatFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[] | ListFloatFieldRefInput<$PrismaModel>
@@ -18115,6 +19517,22 @@ export namespace Prisma {
     in?: $Enums.DepositStatus[] | ListEnumDepositStatusFieldRefInput<$PrismaModel>
     notIn?: $Enums.DepositStatus[] | ListEnumDepositStatusFieldRefInput<$PrismaModel>
     not?: NestedEnumDepositStatusFilter<$PrismaModel> | $Enums.DepositStatus
+  }
+
+  export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedDecimalFilter<$PrismaModel>
+    _sum?: NestedDecimalFilter<$PrismaModel>
+    _min?: NestedDecimalFilter<$PrismaModel>
+    _max?: NestedDecimalFilter<$PrismaModel>
   }
 
   export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
@@ -18328,6 +19746,30 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type InvitationCodeCreateWithoutParentInput = {
+    id?: string
+    code: string
+    usedAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type InvitationCodeUncheckedCreateWithoutParentInput = {
+    id?: string
+    code: string
+    usedAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type InvitationCodeCreateOrConnectWithoutParentInput = {
+    where: InvitationCodeWhereUniqueInput
+    create: XOR<InvitationCodeCreateWithoutParentInput, InvitationCodeUncheckedCreateWithoutParentInput>
+  }
+
+  export type InvitationCodeCreateManyParentInputEnvelope = {
+    data: InvitationCodeCreateManyParentInput | InvitationCodeCreateManyParentInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ParentChildUpsertWithWhereUniqueWithoutParentInput = {
     where: ParentChildWhereUniqueInput
     update: XOR<ParentChildUpdateWithoutParentInput, ParentChildUncheckedUpdateWithoutParentInput>
@@ -18353,6 +19795,33 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"ParentChild"> | Date | string
   }
 
+  export type InvitationCodeUpsertWithWhereUniqueWithoutParentInput = {
+    where: InvitationCodeWhereUniqueInput
+    update: XOR<InvitationCodeUpdateWithoutParentInput, InvitationCodeUncheckedUpdateWithoutParentInput>
+    create: XOR<InvitationCodeCreateWithoutParentInput, InvitationCodeUncheckedCreateWithoutParentInput>
+  }
+
+  export type InvitationCodeUpdateWithWhereUniqueWithoutParentInput = {
+    where: InvitationCodeWhereUniqueInput
+    data: XOR<InvitationCodeUpdateWithoutParentInput, InvitationCodeUncheckedUpdateWithoutParentInput>
+  }
+
+  export type InvitationCodeUpdateManyWithWhereWithoutParentInput = {
+    where: InvitationCodeScalarWhereInput
+    data: XOR<InvitationCodeUpdateManyMutationInput, InvitationCodeUncheckedUpdateManyWithoutParentInput>
+  }
+
+  export type InvitationCodeScalarWhereInput = {
+    AND?: InvitationCodeScalarWhereInput | InvitationCodeScalarWhereInput[]
+    OR?: InvitationCodeScalarWhereInput[]
+    NOT?: InvitationCodeScalarWhereInput | InvitationCodeScalarWhereInput[]
+    id?: StringFilter<"InvitationCode"> | string
+    code?: StringFilter<"InvitationCode"> | string
+    usedAt?: DateTimeNullableFilter<"InvitationCode"> | Date | string | null
+    parentId?: StringFilter<"InvitationCode"> | string
+    createdAt?: DateTimeFilter<"InvitationCode"> | Date | string
+  }
+
   export type ParentChildCreateWithoutChildInput = {
     createdAt?: Date | string
     parent: ParentCreateNestedOneWithoutChildrenInput
@@ -18374,15 +19843,13 @@ export namespace Prisma {
   }
 
   export type SpendingAccountCreateWithoutChildInput = {
-    id: string
-    balance?: Decimal | DecimalJsLike | number | string
+    id?: string
     createdAt?: Date | string
     transactions?: TransactionCreateNestedManyWithoutSpendingAccountInput
   }
 
   export type SpendingAccountUncheckedCreateWithoutChildInput = {
-    id: string
-    balance?: Decimal | DecimalJsLike | number | string
+    id?: string
     createdAt?: Date | string
     transactions?: TransactionUncheckedCreateNestedManyWithoutSpendingAccountInput
   }
@@ -18393,24 +19860,26 @@ export namespace Prisma {
   }
 
   export type DepositCreateWithoutChildInput = {
-    id: string
+    id?: string
     amount: Decimal | DecimalJsLike | number | string
     interestRate: number
     startsAt: Date | string
     endsAt: Date | string
     status?: $Enums.DepositStatus
     createdAt?: Date | string
+    closedAt?: Date | string | null
     transactions?: TransactionCreateNestedManyWithoutDepositInput
   }
 
   export type DepositUncheckedCreateWithoutChildInput = {
-    id: string
+    id?: string
     amount: Decimal | DecimalJsLike | number | string
     interestRate: number
     startsAt: Date | string
     endsAt: Date | string
     status?: $Enums.DepositStatus
     createdAt?: Date | string
+    closedAt?: Date | string | null
     transactions?: TransactionUncheckedCreateNestedManyWithoutDepositInput
   }
 
@@ -18425,7 +19894,7 @@ export namespace Prisma {
   }
 
   export type TaskCreateWithoutChildInput = {
-    id: string
+    id?: string
     title: string
     description?: string | null
     reward: Decimal | DecimalJsLike | number | string
@@ -18440,7 +19909,7 @@ export namespace Prisma {
   }
 
   export type TaskUncheckedCreateWithoutChildInput = {
-    id: string
+    id?: string
     title: string
     description?: string | null
     reward: Decimal | DecimalJsLike | number | string
@@ -18465,19 +19934,23 @@ export namespace Prisma {
   }
 
   export type TaskInstanceCreateWithoutChildInput = {
-    id: string
+    id?: string
     date: Date | string
     status?: $Enums.TaskCompletionStatus
     createdAt?: Date | string
+    approvedAt?: Date | string | null
+    expiredAt?: Date | string | null
     task: TaskCreateNestedOneWithoutInstancesInput
   }
 
   export type TaskInstanceUncheckedCreateWithoutChildInput = {
-    id: string
+    id?: string
     date: Date | string
     status?: $Enums.TaskCompletionStatus
     taskId: string
     createdAt?: Date | string
+    approvedAt?: Date | string | null
+    expiredAt?: Date | string | null
   }
 
   export type TaskInstanceCreateOrConnectWithoutChildInput = {
@@ -18491,7 +19964,7 @@ export namespace Prisma {
   }
 
   export type RequestCreateWithoutChildInput = {
-    id: string
+    id?: string
     type: $Enums.RequestType
     status?: $Enums.RequestStatus
     payload: JsonNullValueInput | InputJsonValue
@@ -18500,7 +19973,7 @@ export namespace Prisma {
   }
 
   export type RequestUncheckedCreateWithoutChildInput = {
-    id: string
+    id?: string
     type: $Enums.RequestType
     status?: $Enums.RequestStatus
     payload: JsonNullValueInput | InputJsonValue
@@ -18519,7 +19992,7 @@ export namespace Prisma {
   }
 
   export type WishlistItemCreateWithoutChildInput = {
-    id: string
+    id?: string
     title: string
     price: Decimal | DecimalJsLike | number | string
     imageUrl?: string | null
@@ -18527,7 +20000,7 @@ export namespace Prisma {
   }
 
   export type WishlistItemUncheckedCreateWithoutChildInput = {
-    id: string
+    id?: string
     title: string
     price: Decimal | DecimalJsLike | number | string
     imageUrl?: string | null
@@ -18573,14 +20046,12 @@ export namespace Prisma {
 
   export type SpendingAccountUpdateWithoutChildInput = {
     id?: StringFieldUpdateOperationsInput | string
-    balance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     transactions?: TransactionUpdateManyWithoutSpendingAccountNestedInput
   }
 
   export type SpendingAccountUncheckedUpdateWithoutChildInput = {
     id?: StringFieldUpdateOperationsInput | string
-    balance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     transactions?: TransactionUncheckedUpdateManyWithoutSpendingAccountNestedInput
   }
@@ -18613,6 +20084,7 @@ export namespace Prisma {
     status?: EnumDepositStatusFilter<"Deposit"> | $Enums.DepositStatus
     childId?: StringFilter<"Deposit"> | string
     createdAt?: DateTimeFilter<"Deposit"> | Date | string
+    closedAt?: DateTimeNullableFilter<"Deposit"> | Date | string | null
   }
 
   export type TaskUpsertWithWhereUniqueWithoutChildInput = {
@@ -18675,6 +20147,8 @@ export namespace Prisma {
     taskId?: StringFilter<"TaskInstance"> | string
     childId?: StringFilter<"TaskInstance"> | string
     createdAt?: DateTimeFilter<"TaskInstance"> | Date | string
+    approvedAt?: DateTimeNullableFilter<"TaskInstance"> | Date | string | null
+    expiredAt?: DateTimeNullableFilter<"TaskInstance"> | Date | string | null
   }
 
   export type RequestUpsertWithWhereUniqueWithoutChildInput = {
@@ -18735,23 +20209,25 @@ export namespace Prisma {
   }
 
   export type ParentCreateWithoutChildrenInput = {
-    id: string
+    id?: string
     email: string
     password: string
     name: string
     avatarUrl?: string | null
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
+    invitations?: InvitationCodeCreateNestedManyWithoutParentInput
   }
 
   export type ParentUncheckedCreateWithoutChildrenInput = {
-    id: string
+    id?: string
     email: string
     password: string
     name: string
     avatarUrl?: string | null
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
+    invitations?: InvitationCodeUncheckedCreateNestedManyWithoutParentInput
   }
 
   export type ParentCreateOrConnectWithoutChildrenInput = {
@@ -18760,7 +20236,7 @@ export namespace Prisma {
   }
 
   export type ChildCreateWithoutParentsInput = {
-    id: string
+    id?: string
     name: string
     password: string
     birthDate?: Date | string | null
@@ -18768,7 +20244,7 @@ export namespace Prisma {
     locale?: string | null
     newsPrompt?: string | null
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
     spending?: SpendingAccountCreateNestedOneWithoutChildInput
     deposits?: DepositCreateNestedManyWithoutChildInput
     tasks?: TaskCreateNestedManyWithoutChildInput
@@ -18778,7 +20254,7 @@ export namespace Prisma {
   }
 
   export type ChildUncheckedCreateWithoutParentsInput = {
-    id: string
+    id?: string
     name: string
     password: string
     birthDate?: Date | string | null
@@ -18786,7 +20262,7 @@ export namespace Prisma {
     locale?: string | null
     newsPrompt?: string | null
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
     spending?: SpendingAccountUncheckedCreateNestedOneWithoutChildInput
     deposits?: DepositUncheckedCreateNestedManyWithoutChildInput
     tasks?: TaskUncheckedCreateNestedManyWithoutChildInput
@@ -18819,6 +20295,7 @@ export namespace Prisma {
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    invitations?: InvitationCodeUpdateManyWithoutParentNestedInput
   }
 
   export type ParentUncheckedUpdateWithoutChildrenInput = {
@@ -18829,6 +20306,7 @@ export namespace Prisma {
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    invitations?: InvitationCodeUncheckedUpdateManyWithoutParentNestedInput
   }
 
   export type ChildUpsertWithoutParentsInput = {
@@ -18879,7 +20357,7 @@ export namespace Prisma {
   }
 
   export type ChildCreateWithoutSpendingInput = {
-    id: string
+    id?: string
     name: string
     password: string
     birthDate?: Date | string | null
@@ -18887,7 +20365,7 @@ export namespace Prisma {
     locale?: string | null
     newsPrompt?: string | null
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
     parents?: ParentChildCreateNestedManyWithoutChildInput
     deposits?: DepositCreateNestedManyWithoutChildInput
     tasks?: TaskCreateNestedManyWithoutChildInput
@@ -18897,7 +20375,7 @@ export namespace Prisma {
   }
 
   export type ChildUncheckedCreateWithoutSpendingInput = {
-    id: string
+    id?: string
     name: string
     password: string
     birthDate?: Date | string | null
@@ -18905,7 +20383,7 @@ export namespace Prisma {
     locale?: string | null
     newsPrompt?: string | null
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
     parents?: ParentChildUncheckedCreateNestedManyWithoutChildInput
     deposits?: DepositUncheckedCreateNestedManyWithoutChildInput
     tasks?: TaskUncheckedCreateNestedManyWithoutChildInput
@@ -19024,7 +20502,7 @@ export namespace Prisma {
   }
 
   export type ChildCreateWithoutDepositsInput = {
-    id: string
+    id?: string
     name: string
     password: string
     birthDate?: Date | string | null
@@ -19032,7 +20510,7 @@ export namespace Prisma {
     locale?: string | null
     newsPrompt?: string | null
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
     parents?: ParentChildCreateNestedManyWithoutChildInput
     spending?: SpendingAccountCreateNestedOneWithoutChildInput
     tasks?: TaskCreateNestedManyWithoutChildInput
@@ -19042,7 +20520,7 @@ export namespace Prisma {
   }
 
   export type ChildUncheckedCreateWithoutDepositsInput = {
-    id: string
+    id?: string
     name: string
     password: string
     birthDate?: Date | string | null
@@ -19050,7 +20528,7 @@ export namespace Prisma {
     locale?: string | null
     newsPrompt?: string | null
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
     parents?: ParentChildUncheckedCreateNestedManyWithoutChildInput
     spending?: SpendingAccountUncheckedCreateNestedOneWithoutChildInput
     tasks?: TaskUncheckedCreateNestedManyWithoutChildInput
@@ -19156,15 +20634,13 @@ export namespace Prisma {
   }
 
   export type SpendingAccountCreateWithoutTransactionsInput = {
-    id: string
-    balance?: Decimal | DecimalJsLike | number | string
+    id?: string
     createdAt?: Date | string
     child: ChildCreateNestedOneWithoutSpendingInput
   }
 
   export type SpendingAccountUncheckedCreateWithoutTransactionsInput = {
-    id: string
-    balance?: Decimal | DecimalJsLike | number | string
+    id?: string
     childId: string
     createdAt?: Date | string
   }
@@ -19175,18 +20651,19 @@ export namespace Prisma {
   }
 
   export type DepositCreateWithoutTransactionsInput = {
-    id: string
+    id?: string
     amount: Decimal | DecimalJsLike | number | string
     interestRate: number
     startsAt: Date | string
     endsAt: Date | string
     status?: $Enums.DepositStatus
     createdAt?: Date | string
+    closedAt?: Date | string | null
     child: ChildCreateNestedOneWithoutDepositsInput
   }
 
   export type DepositUncheckedCreateWithoutTransactionsInput = {
-    id: string
+    id?: string
     amount: Decimal | DecimalJsLike | number | string
     interestRate: number
     startsAt: Date | string
@@ -19194,6 +20671,7 @@ export namespace Prisma {
     status?: $Enums.DepositStatus
     childId: string
     createdAt?: Date | string
+    closedAt?: Date | string | null
   }
 
   export type DepositCreateOrConnectWithoutTransactionsInput = {
@@ -19214,14 +20692,12 @@ export namespace Prisma {
 
   export type SpendingAccountUpdateWithoutTransactionsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    balance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     child?: ChildUpdateOneRequiredWithoutSpendingNestedInput
   }
 
   export type SpendingAccountUncheckedUpdateWithoutTransactionsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    balance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     childId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -19245,6 +20721,7 @@ export namespace Prisma {
     endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumDepositStatusFieldUpdateOperationsInput | $Enums.DepositStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     child?: ChildUpdateOneRequiredWithoutDepositsNestedInput
   }
 
@@ -19257,10 +20734,11 @@ export namespace Prisma {
     status?: EnumDepositStatusFieldUpdateOperationsInput | $Enums.DepositStatus
     childId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type ChildCreateWithoutTasksInput = {
-    id: string
+    id?: string
     name: string
     password: string
     birthDate?: Date | string | null
@@ -19268,7 +20746,7 @@ export namespace Prisma {
     locale?: string | null
     newsPrompt?: string | null
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
     parents?: ParentChildCreateNestedManyWithoutChildInput
     spending?: SpendingAccountCreateNestedOneWithoutChildInput
     deposits?: DepositCreateNestedManyWithoutChildInput
@@ -19278,7 +20756,7 @@ export namespace Prisma {
   }
 
   export type ChildUncheckedCreateWithoutTasksInput = {
-    id: string
+    id?: string
     name: string
     password: string
     birthDate?: Date | string | null
@@ -19286,7 +20764,7 @@ export namespace Prisma {
     locale?: string | null
     newsPrompt?: string | null
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
     parents?: ParentChildUncheckedCreateNestedManyWithoutChildInput
     spending?: SpendingAccountUncheckedCreateNestedOneWithoutChildInput
     deposits?: DepositUncheckedCreateNestedManyWithoutChildInput
@@ -19301,19 +20779,23 @@ export namespace Prisma {
   }
 
   export type TaskInstanceCreateWithoutTaskInput = {
-    id: string
+    id?: string
     date: Date | string
     status?: $Enums.TaskCompletionStatus
     createdAt?: Date | string
+    approvedAt?: Date | string | null
+    expiredAt?: Date | string | null
     child: ChildCreateNestedOneWithoutTaskInstancesInput
   }
 
   export type TaskInstanceUncheckedCreateWithoutTaskInput = {
-    id: string
+    id?: string
     date: Date | string
     status?: $Enums.TaskCompletionStatus
     childId: string
     createdAt?: Date | string
+    approvedAt?: Date | string | null
+    expiredAt?: Date | string | null
   }
 
   export type TaskInstanceCreateOrConnectWithoutTaskInput = {
@@ -19390,7 +20872,7 @@ export namespace Prisma {
   }
 
   export type TaskCreateWithoutInstancesInput = {
-    id: string
+    id?: string
     title: string
     description?: string | null
     reward: Decimal | DecimalJsLike | number | string
@@ -19405,7 +20887,7 @@ export namespace Prisma {
   }
 
   export type TaskUncheckedCreateWithoutInstancesInput = {
-    id: string
+    id?: string
     title: string
     description?: string | null
     reward: Decimal | DecimalJsLike | number | string
@@ -19425,7 +20907,7 @@ export namespace Prisma {
   }
 
   export type ChildCreateWithoutTaskInstancesInput = {
-    id: string
+    id?: string
     name: string
     password: string
     birthDate?: Date | string | null
@@ -19433,7 +20915,7 @@ export namespace Prisma {
     locale?: string | null
     newsPrompt?: string | null
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
     parents?: ParentChildCreateNestedManyWithoutChildInput
     spending?: SpendingAccountCreateNestedOneWithoutChildInput
     deposits?: DepositCreateNestedManyWithoutChildInput
@@ -19443,7 +20925,7 @@ export namespace Prisma {
   }
 
   export type ChildUncheckedCreateWithoutTaskInstancesInput = {
-    id: string
+    id?: string
     name: string
     password: string
     birthDate?: Date | string | null
@@ -19451,7 +20933,7 @@ export namespace Prisma {
     locale?: string | null
     newsPrompt?: string | null
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
     parents?: ParentChildUncheckedCreateNestedManyWithoutChildInput
     spending?: SpendingAccountUncheckedCreateNestedOneWithoutChildInput
     deposits?: DepositUncheckedCreateNestedManyWithoutChildInput
@@ -19554,7 +21036,7 @@ export namespace Prisma {
   }
 
   export type ChildCreateWithoutRequestsInput = {
-    id: string
+    id?: string
     name: string
     password: string
     birthDate?: Date | string | null
@@ -19562,7 +21044,7 @@ export namespace Prisma {
     locale?: string | null
     newsPrompt?: string | null
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
     parents?: ParentChildCreateNestedManyWithoutChildInput
     spending?: SpendingAccountCreateNestedOneWithoutChildInput
     deposits?: DepositCreateNestedManyWithoutChildInput
@@ -19572,7 +21054,7 @@ export namespace Prisma {
   }
 
   export type ChildUncheckedCreateWithoutRequestsInput = {
-    id: string
+    id?: string
     name: string
     password: string
     birthDate?: Date | string | null
@@ -19580,7 +21062,7 @@ export namespace Prisma {
     locale?: string | null
     newsPrompt?: string | null
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
     parents?: ParentChildUncheckedCreateNestedManyWithoutChildInput
     spending?: SpendingAccountUncheckedCreateNestedOneWithoutChildInput
     deposits?: DepositUncheckedCreateNestedManyWithoutChildInput
@@ -19642,7 +21124,7 @@ export namespace Prisma {
   }
 
   export type ChildCreateWithoutWishlistInput = {
-    id: string
+    id?: string
     name: string
     password: string
     birthDate?: Date | string | null
@@ -19650,7 +21132,7 @@ export namespace Prisma {
     locale?: string | null
     newsPrompt?: string | null
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
     parents?: ParentChildCreateNestedManyWithoutChildInput
     spending?: SpendingAccountCreateNestedOneWithoutChildInput
     deposits?: DepositCreateNestedManyWithoutChildInput
@@ -19660,7 +21142,7 @@ export namespace Prisma {
   }
 
   export type ChildUncheckedCreateWithoutWishlistInput = {
-    id: string
+    id?: string
     name: string
     password: string
     birthDate?: Date | string | null
@@ -19668,7 +21150,7 @@ export namespace Prisma {
     locale?: string | null
     newsPrompt?: string | null
     createdAt?: Date | string
-    updatedAt: Date | string
+    updatedAt?: Date | string
     parents?: ParentChildUncheckedCreateNestedManyWithoutChildInput
     spending?: SpendingAccountUncheckedCreateNestedOneWithoutChildInput
     deposits?: DepositUncheckedCreateNestedManyWithoutChildInput
@@ -19729,8 +21211,75 @@ export namespace Prisma {
     requests?: RequestUncheckedUpdateManyWithoutChildNestedInput
   }
 
+  export type ParentCreateWithoutInvitationsInput = {
+    id?: string
+    email: string
+    password: string
+    name: string
+    avatarUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    children?: ParentChildCreateNestedManyWithoutParentInput
+  }
+
+  export type ParentUncheckedCreateWithoutInvitationsInput = {
+    id?: string
+    email: string
+    password: string
+    name: string
+    avatarUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    children?: ParentChildUncheckedCreateNestedManyWithoutParentInput
+  }
+
+  export type ParentCreateOrConnectWithoutInvitationsInput = {
+    where: ParentWhereUniqueInput
+    create: XOR<ParentCreateWithoutInvitationsInput, ParentUncheckedCreateWithoutInvitationsInput>
+  }
+
+  export type ParentUpsertWithoutInvitationsInput = {
+    update: XOR<ParentUpdateWithoutInvitationsInput, ParentUncheckedUpdateWithoutInvitationsInput>
+    create: XOR<ParentCreateWithoutInvitationsInput, ParentUncheckedCreateWithoutInvitationsInput>
+    where?: ParentWhereInput
+  }
+
+  export type ParentUpdateToOneWithWhereWithoutInvitationsInput = {
+    where?: ParentWhereInput
+    data: XOR<ParentUpdateWithoutInvitationsInput, ParentUncheckedUpdateWithoutInvitationsInput>
+  }
+
+  export type ParentUpdateWithoutInvitationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    children?: ParentChildUpdateManyWithoutParentNestedInput
+  }
+
+  export type ParentUncheckedUpdateWithoutInvitationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    children?: ParentChildUncheckedUpdateManyWithoutParentNestedInput
+  }
+
   export type ParentChildCreateManyParentInput = {
     childId: string
+    createdAt?: Date | string
+  }
+
+  export type InvitationCodeCreateManyParentInput = {
+    id?: string
+    code: string
+    usedAt?: Date | string | null
     createdAt?: Date | string
   }
 
@@ -19749,23 +21298,45 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type InvitationCodeUpdateWithoutParentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InvitationCodeUncheckedUpdateWithoutParentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InvitationCodeUncheckedUpdateManyWithoutParentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type ParentChildCreateManyChildInput = {
     parentId: string
     createdAt?: Date | string
   }
 
   export type DepositCreateManyChildInput = {
-    id: string
+    id?: string
     amount: Decimal | DecimalJsLike | number | string
     interestRate: number
     startsAt: Date | string
     endsAt: Date | string
     status?: $Enums.DepositStatus
     createdAt?: Date | string
+    closedAt?: Date | string | null
   }
 
   export type TaskCreateManyChildInput = {
-    id: string
+    id?: string
     title: string
     description?: string | null
     reward: Decimal | DecimalJsLike | number | string
@@ -19779,15 +21350,17 @@ export namespace Prisma {
   }
 
   export type TaskInstanceCreateManyChildInput = {
-    id: string
+    id?: string
     date: Date | string
     status?: $Enums.TaskCompletionStatus
     taskId: string
     createdAt?: Date | string
+    approvedAt?: Date | string | null
+    expiredAt?: Date | string | null
   }
 
   export type RequestCreateManyChildInput = {
-    id: string
+    id?: string
     type: $Enums.RequestType
     status?: $Enums.RequestStatus
     payload: JsonNullValueInput | InputJsonValue
@@ -19796,7 +21369,7 @@ export namespace Prisma {
   }
 
   export type WishlistItemCreateManyChildInput = {
-    id: string
+    id?: string
     title: string
     price: Decimal | DecimalJsLike | number | string
     imageUrl?: string | null
@@ -19826,6 +21399,7 @@ export namespace Prisma {
     endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumDepositStatusFieldUpdateOperationsInput | $Enums.DepositStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     transactions?: TransactionUpdateManyWithoutDepositNestedInput
   }
 
@@ -19837,6 +21411,7 @@ export namespace Prisma {
     endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumDepositStatusFieldUpdateOperationsInput | $Enums.DepositStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     transactions?: TransactionUncheckedUpdateManyWithoutDepositNestedInput
   }
 
@@ -19848,6 +21423,7 @@ export namespace Prisma {
     endsAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumDepositStatusFieldUpdateOperationsInput | $Enums.DepositStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type TaskUpdateWithoutChildInput = {
@@ -19899,6 +21475,8 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumTaskCompletionStatusFieldUpdateOperationsInput | $Enums.TaskCompletionStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     task?: TaskUpdateOneRequiredWithoutInstancesNestedInput
   }
 
@@ -19908,6 +21486,8 @@ export namespace Prisma {
     status?: EnumTaskCompletionStatusFieldUpdateOperationsInput | $Enums.TaskCompletionStatus
     taskId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type TaskInstanceUncheckedUpdateManyWithoutChildInput = {
@@ -19916,6 +21496,8 @@ export namespace Prisma {
     status?: EnumTaskCompletionStatusFieldUpdateOperationsInput | $Enums.TaskCompletionStatus
     taskId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type RequestUpdateWithoutChildInput = {
@@ -20042,11 +21624,13 @@ export namespace Prisma {
   }
 
   export type TaskInstanceCreateManyTaskInput = {
-    id: string
+    id?: string
     date: Date | string
     status?: $Enums.TaskCompletionStatus
     childId: string
     createdAt?: Date | string
+    approvedAt?: Date | string | null
+    expiredAt?: Date | string | null
   }
 
   export type TaskInstanceUpdateWithoutTaskInput = {
@@ -20054,6 +21638,8 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumTaskCompletionStatusFieldUpdateOperationsInput | $Enums.TaskCompletionStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     child?: ChildUpdateOneRequiredWithoutTaskInstancesNestedInput
   }
 
@@ -20063,6 +21649,8 @@ export namespace Prisma {
     status?: EnumTaskCompletionStatusFieldUpdateOperationsInput | $Enums.TaskCompletionStatus
     childId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type TaskInstanceUncheckedUpdateManyWithoutTaskInput = {
@@ -20071,6 +21659,8 @@ export namespace Prisma {
     status?: EnumTaskCompletionStatusFieldUpdateOperationsInput | $Enums.TaskCompletionStatus
     childId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expiredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
 

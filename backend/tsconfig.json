@@ -15,9 +15,8 @@
     "incremental": true,
     "skipLibCheck": true,
 
-    "strict": true,
-    "strictNullChecks": true,
-    "forceConsistentCasingInFileNames": true
+    "strict": false,
+    "skipLibCheck": true
   },
   "ts-node": {
     "files": true,

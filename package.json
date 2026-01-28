@@ -1,18 +1,37 @@
 {
-  "dependencies": {
-    "@nestjs/jwt": "^11.0.2",
-    "@nestjs/passport": "^11.0.5",
-    "@prisma/client": "^7.3.0",
-    "bcryptjs": "^3.0.3",
-    "class-transformer": "^0.5.1",
-    "class-validator": "^0.14.3",
-    "passport": "^0.7.0",
-    "passport-jwt": "^4.0.1"
+  "name": "unicorn-bank-app",
+  "version": "1.0.0",
+  "description": "Unicorn Bank Application - Root workspace",
+  "private": true,
+  "workspaces": [
+    "backend"
+  ],
+  "scripts": {
+    "start:dev": "cd backend && npm run start:dev",
+    "start": "cd backend && npm run start",
+    "start:debug": "cd backend && npm run start:debug",
+    "start:prod": "cd backend && npm run start:prod",
+    "build": "cd backend && npm run build",
+    "test": "cd backend && npm run test",
+    "test:watch": "cd backend && npm run test:watch",
+    "test:cov": "cd backend && npm run test:cov",
+    "test:e2e": "cd backend && npm run test:e2e",
+    "lint": "cd backend && npm run lint",
+    "format": "cd backend && npm run format"
   },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "keywords": [
+    "banking",
+    "financial",
+    "nestjs",
+    "backend"
+  ],
+  "author": "",
+  "license": "UNLICENSED",
   "devDependencies": {
-    "@nestjs/testing": "^11.1.12",
-    "@types/jest": "^30.0.0",
-    "prisma": "^7.3.0",
-    "ts-jest": "^29.4.6"
+    "@types/bcrypt": "^6.0.0"
   }
 }

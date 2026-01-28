@@ -150,7 +150,6 @@ exports.Prisma.ParentChildScalarFieldEnum = {
 
 exports.Prisma.SpendingAccountScalarFieldEnum = {
   id: 'id',
-  balance: 'balance',
   childId: 'childId',
   createdAt: 'createdAt'
 };
@@ -163,7 +162,8 @@ exports.Prisma.DepositScalarFieldEnum = {
   endsAt: 'endsAt',
   status: 'status',
   childId: 'childId',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  closedAt: 'closedAt'
 };
 
 exports.Prisma.TransactionScalarFieldEnum = {
@@ -197,7 +197,9 @@ exports.Prisma.TaskInstanceScalarFieldEnum = {
   status: 'status',
   taskId: 'taskId',
   childId: 'childId',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  approvedAt: 'approvedAt',
+  expiredAt: 'expiredAt'
 };
 
 exports.Prisma.RequestScalarFieldEnum = {
@@ -226,6 +228,14 @@ exports.Prisma.WishlistItemScalarFieldEnum = {
   price: 'price',
   imageUrl: 'imageUrl',
   childId: 'childId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.InvitationCodeScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  usedAt: 'usedAt',
+  parentId: 'parentId',
   createdAt: 'createdAt'
 };
 
@@ -316,7 +326,8 @@ exports.Prisma.ModelName = {
   TaskInstance: 'TaskInstance',
   Request: 'Request',
   Notification: 'Notification',
-  WishlistItem: 'WishlistItem'
+  WishlistItem: 'WishlistItem',
+  InvitationCode: 'InvitationCode'
 };
 
 /**
