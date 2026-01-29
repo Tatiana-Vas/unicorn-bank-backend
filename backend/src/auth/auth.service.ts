@@ -5,6 +5,7 @@ import * as bcrypt from 'bcrypt';
 import { UserRole } from './enums/user-role.enum';
 import { ChildLoginDto } from './dto/child-login.dto';
 import { UnauthorizedException } from '@nestjs/common';
+import { AuthResponseDto } from './dto/auth-response.dto';
 
 @Injectable()
 export class AuthService {
@@ -13,7 +14,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async validateUser(email: string, password: string): Promise<any> {
+  async validateUser(email: string, password: string): Promise<AuthResponseDto> {
     const user = await (this.prismaService as any).parent.findUnique({
       where: { email },
     });
@@ -28,13 +29,15 @@ export class AuthService {
     }
 
     const payload = { email: user.email, sub: user.id, role: UserRole.PARENT };
-    return {
+    // Create a sanitized user object without password
+    const { password: userPassword, ...sanitizedUser } = user;
+    return new AuthResponseDto({
       accessToken: this.jwtService.sign(payload),
-      user,
-    };
+      user: sanitizedUser,
+    });
   }
 
-  async registerUser(userData: { email: string; password: string; name: string }): Promise<any> {
+  async registerUser(userData: { email: string; password: string; name: string }): Promise<AuthResponseDto> {
     const hashedPassword = await bcrypt.hash(userData.password, 10);
     const user = await (this.prismaService as any).parent.create({
       data: {
@@ -45,16 +48,18 @@ export class AuthService {
     });
 
     const payload = { email: user.email, sub: user.id, role: UserRole.PARENT };
-    return {
+    // Create a sanitized user object without password
+    const { password: userPassword, ...sanitizedUser } = user;
+    return new AuthResponseDto({
       accessToken: this.jwtService.sign(payload),
-      user,
-    };
+      user: sanitizedUser,
+    });
   }
 
   async registerChild(
     childData: { name: string; password?: string },
     parentId: string,
-  ): Promise<any> {
+  ): Promise<AuthResponseDto> {
     const hashedPassword = childData.password ? await bcrypt.hash(childData.password, 10) : '';
     
     const child = await (this.prismaService as any).child.create({
@@ -80,10 +85,12 @@ export class AuthService {
     });
 
     const payload = { name: child.name, sub: child.id, role: UserRole.CHILD };
-    return {
+    // Create a sanitized user object without password
+    const { password: childPassword, ...sanitizedChild } = child;
+    return new AuthResponseDto({
       accessToken: this.jwtService.sign(payload),
-      user: child,
-    };
+      user: sanitizedChild,
+    });
   }
 
   async createInvitationCode(parentId: string): Promise<string> {
@@ -100,26 +107,29 @@ export class AuthService {
     return code;
   }
 
-  async joinChild(invitationCode: string, pin: string): Promise<any> {
+  async joinChild(invitationCode: string, pin: string): Promise<AuthResponseDto> {
     // Находим код приглашения
     const invitation = await (this.prismaService as any).invitationCode.findUnique({
       where: { code: invitationCode },
     });
 
-    if (!invitation || invitation.usedAt) {
-      throw new Error('Invalid or expired invitation code');
+    if (!invitation) {
+      throw new Error('Invalid invitation code');
+    }
+
+    if (invitation.usedAt) {
+      throw new Error('Invitation code already used');
     }
 
     if (new Date() > new Date(invitation.expiresAt)) {
       throw new Error('Invitation code expired');
     }
 
-    // Находим ребенка по коду (в реальной системе нужен поиск по имени или другому полю)
-    // Для простоты пока пропустим этот шаг
+    // Создаем ребенка с PIN
     const child = await (this.prismaService as any).child.create({
       data: {
         name: `Child_${invitationCode.substring(0, 4)}`,
-        password: await bcrypt.hash(pin, 10),
+        pin: await bcrypt.hash(pin, 10),
       },
     });
 
@@ -130,20 +140,43 @@ export class AuthService {
     });
 
     const payload = { name: child.name, sub: child.id, role: UserRole.CHILD };
-    return {
+    // Create a sanitized user object without password
+    const { password: childPassword, ...sanitizedChild } = child;
+    return new AuthResponseDto({
       accessToken: this.jwtService.sign(payload),
-      user: child,
-    };
+      user: sanitizedChild,
+    });
   }
 
-  async childLogin(childLoginDto: ChildLoginDto): Promise<any> {
+  async childLogin(childLoginDto: ChildLoginDto): Promise<AuthResponseDto> {
     const { pin } = childLoginDto;
     const children = await (this.prismaService as any).child.findMany();
     for (const child of children) {
-      const isMatch = await bcrypt.compare(pin, child.password);
-      if (isMatch) {
-        const payload = { name: child.name, sub: child.id, role: UserRole.CHILD };
-        return { accessToken: this.jwtService.sign(payload), user: child };
+      // Проверяем PIN, если он установлен
+      if (child.pin) {
+        const isMatch = await bcrypt.compare(pin, child.pin);
+        if (isMatch) {
+          const payload = { name: child.name, sub: child.id, role: UserRole.CHILD };
+          // Create a sanitized user object without password
+          const { password: childPassword, ...sanitizedChild } = child;
+          return new AuthResponseDto({
+            accessToken: this.jwtService.sign(payload),
+            user: sanitizedChild,
+          });
+        }
+      }
+      // Для совместимости - проверяем password (если PIN не установлен)
+      else if (child.password) {
+        const isMatch = await bcrypt.compare(pin, child.password);
+        if (isMatch) {
+          const payload = { name: child.name, sub: child.id, role: UserRole.CHILD };
+          // Create a sanitized user object without password
+          const { password: childPassword, ...sanitizedChild } = child;
+          return new AuthResponseDto({
+            accessToken: this.jwtService.sign(payload),
+            user: sanitizedChild,
+          });
+        }
       }
     }
     throw new UnauthorizedException('Invalid PIN');

@@ -7,11 +7,13 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { FinancialModule } from './financial/financial.module';
 import { TaskModule } from './task/task.module';
-import { MiddlewareModule } from './common/middleware/middleware.module';
 import { RequestModule } from './request/request.module';
+import { DepositModule } from './deposit/deposit.module';
+import { ParentModule } from './parent/parent.module';
+import { ChildModule } from './child/child.module';
 
 @Module({
-  imports: [PrismaModule, HealthModule, AuthModule, UserModule, FinancialModule, TaskModule, RequestModule, MiddlewareModule],
+  imports: [PrismaModule, HealthModule, AuthModule, UserModule, FinancialModule, TaskModule, RequestModule, DepositModule, ParentModule, ChildModule],
   controllers: [AppController],
   providers: [AppService],
 })

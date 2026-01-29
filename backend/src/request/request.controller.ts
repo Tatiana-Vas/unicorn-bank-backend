@@ -9,6 +9,7 @@ import {
   MoneyWithdrawRequestDto,
   NewDepositRequestDto 
 } from './dto/request.dto';
+import { AuthResponseDto } from '../auth/dto/auth-response.dto';
 
 @Controller('requests')
 export class RequestController {

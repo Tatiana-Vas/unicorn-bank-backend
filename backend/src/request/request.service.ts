@@ -12,13 +12,15 @@ import {
   MoneyWithdrawRequestDto,
   NewDepositRequestDto
 } from './dto/request.dto';
+import { AuthResponseDto } from '../auth/dto/auth-response.dto';
+import { UserRole } from '../auth/enums/user-role.enum';
 
 @Injectable()
 export class RequestService {
   constructor(private prisma: PrismaService) {}
 
-  async createRequest(createRequestDto: CreateRequestDto): Promise<any> {
-    return (this.prisma as any).request.create({
+  async createRequest(createRequestDto: CreateRequestDto): Promise<AuthResponseDto> {
+    const request = await (this.prisma as any).request.create({
       data: {
         type: createRequestDto.type,
         status: RequestStatus.PENDING,
@@ -26,18 +28,48 @@ export class RequestService {
         payload: createRequestDto.payload || {},
       },
     });
+
+    // Создаем JWT токен
+    const jwtService = new (require('@nestjs/jwt').JwtService)({
+      secret: process.env.JWT_SECRET || 'default-secret',
+      signOptions: { expiresIn: '1h' },
+    });
+
+    const payload = { requestId: request.id, sub: request.childId, role: UserRole.CHILD };
+    const accessToken = jwtService.sign(payload);
+
+    return new AuthResponseDto({
+      accessToken,
+      user: request,
+    });
   }
 
-  async getRequestById(requestId: string): Promise<any | null> {
-    return (this.prisma as any).request.findUnique({
+  async getRequestById(requestId: string): Promise<AuthResponseDto | null> {
+    const request = await (this.prisma as any).request.findUnique({
       where: { id: requestId },
       include: {
         child: true,
       },
     });
+
+    if (!request) return null;
+
+    // Создаем JWT токен
+    const jwtService = new (require('@nestjs/jwt').JwtService)({
+      secret: process.env.JWT_SECRET || 'default-secret',
+      signOptions: { expiresIn: '1h' },
+    });
+
+    const payload = { requestId: request.id, sub: request.childId, role: UserRole.CHILD };
+    const accessToken = jwtService.sign(payload);
+
+    return new AuthResponseDto({
+      accessToken,
+      user: request,
+    });
   }
 
-  async getRequests(getRequestsDto: GetRequestsDto): Promise<any[]> {
+  async getRequests(getRequestsDto: GetRequestsDto): Promise<AuthResponseDto[]> {
     const { childId, type, status, limit = 10, offset = 0 } = getRequestsDto;
 
     const where: any = { childId };
@@ -50,7 +82,7 @@ export class RequestService {
       where.status = status;
     }
 
-    return (this.prisma as any).request.findMany({
+    const requests = await (this.prisma as any).request.findMany({
       where,
       orderBy: {
         createdAt: 'desc',
@@ -61,11 +93,27 @@ export class RequestService {
         child: true,
       },
     });
+
+    return Promise.all(requests.map(async (request: any) => {
+      // Создаем JWT токен для каждого запроса
+      const jwtService = new (require('@nestjs/jwt').JwtService)({
+        secret: process.env.JWT_SECRET || 'default-secret',
+        signOptions: { expiresIn: '1h' },
+      });
+
+      const payload = { requestId: request.id, sub: request.childId, role: UserRole.CHILD };
+      const accessToken = jwtService.sign(payload);
+
+      return new AuthResponseDto({
+        accessToken,
+        user: request,
+      });
+    }));
   }
 
-  async getRequestsForParent(parentId: string): Promise<any[]> {
+  async getRequestsForParent(parentId: string): Promise<AuthResponseDto[]> {
     // Получаем заявки от детей этого родителя
-    return (this.prisma as any).request.findMany({
+    const requests = await (this.prisma as any).request.findMany({
       where: {
         child: {
           parents: {
@@ -82,9 +130,25 @@ export class RequestService {
         child: true,
       },
     });
+
+    return Promise.all(requests.map(async (request: any) => {
+      // Создаем JWT токен для каждого запроса
+      const jwtService = new (require('@nestjs/jwt').JwtService)({
+        secret: process.env.JWT_SECRET || 'default-secret',
+        signOptions: { expiresIn: '1h' },
+      });
+
+      const payload = { requestId: request.id, sub: request.childId, role: UserRole.PARENT };
+      const accessToken = jwtService.sign(payload);
+
+      return new AuthResponseDto({
+        accessToken,
+        user: request,
+      });
+    }));
   }
 
-  async respondToRequest(respondDto: RespondToRequestDto): Promise<any> {
+  async respondToRequest(respondDto: RespondToRequestDto): Promise<AuthResponseDto> {
     const request = await (this.prisma as any).request.findUnique({
       where: { id: respondDto.requestId },
     });
@@ -113,10 +177,22 @@ export class RequestService {
     // Обрабатываем бизнес-логику для разных типов заявок
     await this.processRequestResolution(updatedRequest);
 
-    return updatedRequest;
+    // Создаем JWT токен
+    const jwtService = new (require('@nestjs/jwt').JwtService)({
+      secret: process.env.JWT_SECRET || 'default-secret',
+      signOptions: { expiresIn: '1h' },
+    });
+
+    const payload = { requestId: updatedRequest.id, sub: updatedRequest.childId, role: UserRole.PARENT };
+    const accessToken = jwtService.sign(payload);
+
+    return new AuthResponseDto({
+      accessToken,
+      user: updatedRequest,
+    });
   }
 
-  async createTaskRequest(childId: string, taskData: NewTaskRequestDto): Promise<any> {
+  async createTaskRequest(childId: string, taskData: NewTaskRequestDto): Promise<AuthResponseDto> {
     return this.createRequest({
       type: RequestType.NEW_TASK,
       childId,
@@ -127,7 +203,7 @@ export class RequestService {
   async createWishlistPurchaseRequest(
     childId: string, 
     requestData: WishlistPurchaseRequestDto
-  ): Promise<any> {
+  ): Promise<AuthResponseDto> {
     return this.createRequest({
       type: RequestType.WISHLIST_PURCHASE,
       childId,
@@ -138,7 +214,7 @@ export class RequestService {
   async createMoneyWithdrawRequest(
     childId: string, 
     requestData: MoneyWithdrawRequestDto
-  ): Promise<any> {
+  ): Promise<AuthResponseDto> {
     return this.createRequest({
       type: RequestType.MONEY_WITHDRAW,
       childId,
@@ -149,7 +225,7 @@ export class RequestService {
   async createNewDepositRequest(
     childId: string, 
     requestData: NewDepositRequestDto
-  ): Promise<any> {
+  ): Promise<AuthResponseDto> {
     return this.createRequest({
       type: RequestType.NEW_DEPOSIT,
       childId,

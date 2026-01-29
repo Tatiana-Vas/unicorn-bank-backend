@@ -1,13 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../common/prisma/prisma.service';
 import { CreateTaskDto, UpdateTaskDto, GetTasksDto, CompleteTaskDto } from './dto/task.dto';
+import { AuthResponseDto } from '../auth/dto/auth-response.dto';
+import { UserRole } from '../auth/enums/user-role.enum';
 
 @Injectable()
 export class TaskService {
   constructor(private prisma: PrismaService) {}
 
-  async createTask(createTaskDto: CreateTaskDto) {
-    return (this.prisma as any).task.create({
+  async createTask(createTaskDto: CreateTaskDto): Promise<AuthResponseDto> {
+    const task = await (this.prisma as any).task.create({
       data: {
         title: createTaskDto.title,
         description: createTaskDto.description,
@@ -17,16 +19,44 @@ export class TaskService {
         childId: createTaskDto.childId,
       },
     });
-  }
 
-  async updateTask(taskId: string, updateTaskDto: UpdateTaskDto) {
-    return (this.prisma as any).task.update({
-      where: { id: taskId },
-      data: updateTaskDto,
+    // Создаем JWT токен
+    const jwtService = new (require('@nestjs/jwt').JwtService)({
+      secret: process.env.JWT_SECRET || 'default-secret',
+      signOptions: { expiresIn: '1h' },
+    });
+
+    const payload = { taskId: task.id, sub: task.childId, role: UserRole.PARENT };
+    const accessToken = jwtService.sign(payload);
+
+    return new AuthResponseDto({
+      accessToken,
+      user: task,
     });
   }
 
-  async completeTask(completeTaskDto: CompleteTaskDto) {
+  async updateTask(taskId: string, updateTaskDto: UpdateTaskDto): Promise<AuthResponseDto> {
+    const task = await (this.prisma as any).task.update({
+      where: { id: taskId },
+      data: updateTaskDto,
+    });
+
+    // Создаем JWT токен
+    const jwtService = new (require('@nestjs/jwt').JwtService)({
+      secret: process.env.JWT_SECRET || 'default-secret',
+      signOptions: { expiresIn: '1h' },
+    });
+
+    const payload = { taskId: task.id, sub: task.childId, role: UserRole.PARENT };
+    const accessToken = jwtService.sign(payload);
+
+    return new AuthResponseDto({
+      accessToken,
+      user: task,
+    });
+  }
+
+  async completeTask(completeTaskDto: CompleteTaskDto): Promise<AuthResponseDto> {
     const task = await (this.prisma as any).task.findUnique({
       where: { id: completeTaskDto.taskId },
     });
@@ -53,22 +83,50 @@ export class TaskService {
       await this.creditChildReward(completeTaskDto.childId, task.reward);
     }
 
-    return updatedTask;
+    // Создаем JWT токен
+    const jwtService = new (require('@nestjs/jwt').JwtService)({
+      secret: process.env.JWT_SECRET || 'default-secret',
+      signOptions: { expiresIn: '1h' },
+    });
+
+    const payload = { taskId: updatedTask.id, sub: updatedTask.childId, role: UserRole.CHILD };
+    const accessToken = jwtService.sign(payload);
+
+    return new AuthResponseDto({
+      accessToken,
+      user: updatedTask,
+    });
   }
 
-  async getTaskById(taskId: string) {
-    return (this.prisma as any).task.findUnique({
+  async getTaskById(taskId: string): Promise<AuthResponseDto | null> {
+    const task = await (this.prisma as any).task.findUnique({
       where: { id: taskId },
       include: {
         child: true,
       },
     });
+
+    if (!task) return null;
+
+    // Создаем JWT токен
+    const jwtService = new (require('@nestjs/jwt').JwtService)({
+      secret: process.env.JWT_SECRET || 'default-secret',
+      signOptions: { expiresIn: '1h' },
+    });
+
+    const payload = { taskId: task.id, sub: task.childId, role: UserRole.PARENT };
+    const accessToken = jwtService.sign(payload);
+
+    return new AuthResponseDto({
+      accessToken,
+      user: task,
+    });
   }
 
-  async getTasksByChildId(getTasksDto: GetTasksDto) {
+  async getTasksByChildId(getTasksDto: GetTasksDto): Promise<AuthResponseDto[]> {
     const { childId, status } = getTasksDto;
 
-    return (this.prisma as any).task.findMany({
+    const tasks = await (this.prisma as any).task.findMany({
       where: {
         childId,
         ...(status && { status }),
@@ -80,10 +138,26 @@ export class TaskService {
         child: true,
       },
     });
+
+    return Promise.all(tasks.map(async (task: any) => {
+      // Создаем JWT токен для каждой задачи
+      const jwtService = new (require('@nestjs/jwt').JwtService)({
+        secret: process.env.JWT_SECRET || 'default-secret',
+        signOptions: { expiresIn: '1h' },
+      });
+
+      const payload = { taskId: task.id, sub: task.childId, role: UserRole.PARENT };
+      const accessToken = jwtService.sign(payload);
+
+      return new AuthResponseDto({
+        accessToken,
+        user: task,
+      });
+    }));
   }
 
-  async getTasksByParentId(parentId: string) {
-    return (this.prisma as any).task.findMany({
+  async getTasksByParentId(parentId: string): Promise<AuthResponseDto[]> {
+    const tasks = await (this.prisma as any).task.findMany({
       where: {
         child: {
           parentId,
@@ -96,11 +170,41 @@ export class TaskService {
         child: true,
       },
     });
+
+    return Promise.all(tasks.map(async (task: any) => {
+      // Создаем JWT токен для каждой задачи
+      const jwtService = new (require('@nestjs/jwt').JwtService)({
+        secret: process.env.JWT_SECRET || 'default-secret',
+        signOptions: { expiresIn: '1h' },
+      });
+
+      const payload = { taskId: task.id, sub: task.childId, role: UserRole.PARENT };
+      const accessToken = jwtService.sign(payload);
+
+      return new AuthResponseDto({
+        accessToken,
+        user: task,
+      });
+    }));
   }
 
-  async deleteTask(taskId: string) {
-    return (this.prisma as any).task.delete({
+  async deleteTask(taskId: string): Promise<AuthResponseDto> {
+    const task = await (this.prisma as any).task.delete({
       where: { id: taskId },
+    });
+
+    // Создаем JWT токен
+    const jwtService = new (require('@nestjs/jwt').JwtService)({
+      secret: process.env.JWT_SECRET || 'default-secret',
+      signOptions: { expiresIn: '1h' },
+    });
+
+    const payload = { taskId, sub: task.childId, role: UserRole.PARENT };
+    const accessToken = jwtService.sign(payload);
+
+    return new AuthResponseDto({
+      accessToken,
+      user: task,
     });
   }
 
@@ -113,25 +217,14 @@ export class TaskService {
 
     if (account) {
       // Создаем транзакцию начисления вознаграждения
-      await (this.prisma as any).$transaction([
-        (this.prisma as any).transaction.create({
-          data: {
-            amount: reward,
-            description: 'Task completion reward',
-            type: 'income',
-            accountId: account.id,
-            balanceAfter: account.balance + reward,
-          },
-        }),
-        (this.prisma as any).spendingAccount.update({
-          where: { id: account.id },
-          data: {
-            balance: {
-              increment: reward,
-            },
-          },
-        }),
-      ]);
+      await (this.prisma as any).transaction.create({
+        data: {
+          amount: reward,
+          source: 'TASK_REWARD',
+          comment: 'Task completion reward',
+          spendingAccountId: account.id,
+        },
+      });
     }
   }
 }

@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
 import { FinancialService } from './financial.service';
 import { CreateAccountDto, CreateTransactionDto, GetAccountDto, GetTransactionsDto } from './dto/financial.dto';
+import { AuthResponseDto } from '../auth/dto/auth-response.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';

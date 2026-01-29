@@ -1,21 +1,37 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../common/prisma/prisma.service';
 import { CreateAccountDto, CreateTransactionDto, GetAccountDto, GetTransactionsDto, TopUpDto, WithdrawDto, TransactionSource } from './dto/financial.dto';
+import { AuthResponseDto } from '../auth/dto/auth-response.dto';
+import { UserRole } from '../auth/enums/user-role.enum';
 
 @Injectable()
 export class FinancialService {
   constructor(private prisma: PrismaService) {}
 
-  async createAccount(createAccountDto: CreateAccountDto): Promise<any> {
+  async createAccount(createAccountDto: CreateAccountDto): Promise<AuthResponseDto> {
     // SpendingAccount создается без баланса, баланс вычисляется из транзакций
-    return (this.prisma as any).spendingAccount.create({
+    const account = await (this.prisma as any).spendingAccount.create({
       data: {
         childId: createAccountDto.childId,
       },
     });
+
+    // Создаем JWT токен
+    const jwtService = new (require('@nestjs/jwt').JwtService)({
+      secret: process.env.JWT_SECRET || 'default-secret',
+      signOptions: { expiresIn: '1h' },
+    });
+
+    const payload = { accountId: account.id, sub: account.childId, role: UserRole.PARENT };
+    const accessToken = jwtService.sign(payload);
+
+    return new AuthResponseDto({
+      accessToken,
+      user: account,
+    });
   }
 
-  async createTransaction(createTransactionDto: CreateTransactionDto): Promise<any> {
+  async createTransaction(createTransactionDto: CreateTransactionDto): Promise<AuthResponseDto> {
     const account = await (this.prisma as any).spendingAccount.findUnique({
       where: { id: createTransactionDto.accountId },
     });
@@ -34,10 +50,22 @@ export class FinancialService {
       },
     });
 
-    return transaction;
+    // Создаем JWT токен
+    const jwtService = new (require('@nestjs/jwt').JwtService)({
+      secret: process.env.JWT_SECRET || 'default-secret',
+      signOptions: { expiresIn: '1h' },
+    });
+
+    const payload = { transactionId: transaction.id, sub: transaction.spendingAccountId, role: UserRole.PARENT };
+    const accessToken = jwtService.sign(payload);
+
+    return new AuthResponseDto({
+      accessToken,
+      user: transaction,
+    });
   }
 
-  async getAccount(getAccountDto: GetAccountDto): Promise<any | null> {
+  async getAccount(getAccountDto: GetAccountDto): Promise<AuthResponseDto | null> {
     const account = await (this.prisma as any).spendingAccount.findUnique({
       where: { id: getAccountDto.accountId },
       include: {
@@ -54,16 +82,30 @@ export class FinancialService {
     // Вычисляем баланс из транзакций
     const balance = await this.calculateBalance(getAccountDto.accountId);
     
-    return {
+    const accountWithBalance = {
       ...account,
       balance,
     };
+
+    // Создаем JWT токен
+    const jwtService = new (require('@nestjs/jwt').JwtService)({
+      secret: process.env.JWT_SECRET || 'default-secret',
+      signOptions: { expiresIn: '1h' },
+    });
+
+    const payload = { accountId: account.id, sub: account.childId, role: UserRole.PARENT };
+    const accessToken = jwtService.sign(payload);
+
+    return new AuthResponseDto({
+      accessToken,
+      user: accountWithBalance,
+    });
   }
 
-  async getTransactions(getTransactionsDto: GetTransactionsDto): Promise<any[]> {
+  async getTransactions(getTransactionsDto: GetTransactionsDto): Promise<AuthResponseDto> {
     const { accountId, limit = 10, offset = 0 } = getTransactionsDto;
 
-    return (this.prisma as any).transaction.findMany({
+    const transactions = await (this.prisma as any).transaction.findMany({
       where: { spendingAccountId: accountId },
       orderBy: {
         createdAt: 'desc',
@@ -71,13 +113,41 @@ export class FinancialService {
       take: limit,
       skip: offset,
     });
+
+    // Создаем JWT токен
+    const jwtService = new (require('@nestjs/jwt').JwtService)({
+      secret: process.env.JWT_SECRET || 'default-secret',
+      signOptions: { expiresIn: '1h' },
+    });
+
+    const payload = { accountId, sub: accountId, role: UserRole.PARENT };
+    const accessToken = jwtService.sign(payload);
+
+    return new AuthResponseDto({
+      accessToken,
+      user: transactions,
+    });
   }
 
-  async getAccountBalance(accountId: string): Promise<number> {
-    return this.calculateBalance(accountId);
+  async getAccountBalance(accountId: string): Promise<AuthResponseDto> {
+    const balance = await this.calculateBalance(accountId);
+
+    // Создаем JWT токен
+    const jwtService = new (require('@nestjs/jwt').JwtService)({
+      secret: process.env.JWT_SECRET || 'default-secret',
+      signOptions: { expiresIn: '1h' },
+    });
+
+    const payload = { accountId, balance, sub: accountId, role: UserRole.PARENT };
+    const accessToken = jwtService.sign(payload);
+
+    return new AuthResponseDto({
+      accessToken,
+      user: { balance, accountId },
+    });
   }
 
-  async getAccountsByChildId(childId: string): Promise<any[]> {
+  async getAccountsByChildId(childId: string): Promise<AuthResponseDto> {
     const accounts = await (this.prisma as any).spendingAccount.findMany({
       where: { childId },
       include: {
@@ -91,15 +161,29 @@ export class FinancialService {
     });
 
     // Вычисляем баланс для каждого аккаунта
-    return await Promise.all(
+    const accountsWithBalance = await Promise.all(
       accounts.map(async (account: any) => ({
         ...account,
         balance: await this.calculateBalance(account.id),
       }))
     );
+
+    // Создаем JWT токен
+    const jwtService = new (require('@nestjs/jwt').JwtService)({
+      secret: process.env.JWT_SECRET || 'default-secret',
+      signOptions: { expiresIn: '1h' },
+    });
+
+    const payload = { childId, sub: childId, role: UserRole.PARENT };
+    const accessToken = jwtService.sign(payload);
+
+    return new AuthResponseDto({
+      accessToken,
+      user: accountsWithBalance,
+    });
   }
 
-  async getAccountsByParentId(parentId: string): Promise<any[]> {
+  async getAccountsByParentId(parentId: string): Promise<AuthResponseDto> {
     const accounts = await (this.prisma as any).spendingAccount.findMany({
       where: {
         child: {
@@ -122,12 +206,26 @@ export class FinancialService {
     });
 
     // Вычисляем баланс для каждого аккаунта
-    return await Promise.all(
+    const accountsWithBalance = await Promise.all(
       accounts.map(async (account: any) => ({
         ...account,
         balance: await this.calculateBalance(account.id),
       }))
     );
+
+    // Создаем JWT токен
+    const jwtService = new (require('@nestjs/jwt').JwtService)({
+      secret: process.env.JWT_SECRET || 'default-secret',
+      signOptions: { expiresIn: '1h' },
+    });
+
+    const payload = { parentId, sub: parentId, role: UserRole.PARENT };
+    const accessToken = jwtService.sign(payload);
+
+    return new AuthResponseDto({
+      accessToken,
+      user: accountsWithBalance,
+    });
   }
 
   private async calculateBalance(accountId: string): Promise<number> {

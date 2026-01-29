@@ -3315,6 +3315,7 @@ export namespace Prisma {
     id: string | null
     name: string | null
     password: string | null
+    pin: string | null
     birthDate: Date | null
     city: string | null
     locale: string | null
@@ -3327,6 +3328,7 @@ export namespace Prisma {
     id: string | null
     name: string | null
     password: string | null
+    pin: string | null
     birthDate: Date | null
     city: string | null
     locale: string | null
@@ -3339,6 +3341,7 @@ export namespace Prisma {
     id: number
     name: number
     password: number
+    pin: number
     birthDate: number
     city: number
     locale: number
@@ -3353,6 +3356,7 @@ export namespace Prisma {
     id?: true
     name?: true
     password?: true
+    pin?: true
     birthDate?: true
     city?: true
     locale?: true
@@ -3365,6 +3369,7 @@ export namespace Prisma {
     id?: true
     name?: true
     password?: true
+    pin?: true
     birthDate?: true
     city?: true
     locale?: true
@@ -3377,6 +3382,7 @@ export namespace Prisma {
     id?: true
     name?: true
     password?: true
+    pin?: true
     birthDate?: true
     city?: true
     locale?: true
@@ -3462,6 +3468,7 @@ export namespace Prisma {
     id: string
     name: string
     password: string
+    pin: string | null
     birthDate: Date | null
     city: string | null
     locale: string | null
@@ -3491,6 +3498,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     password?: boolean
+    pin?: boolean
     birthDate?: boolean
     city?: boolean
     locale?: boolean
@@ -3511,6 +3519,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     password?: boolean
+    pin?: boolean
     birthDate?: boolean
     city?: boolean
     locale?: boolean
@@ -3523,6 +3532,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     password?: boolean
+    pin?: boolean
     birthDate?: boolean
     city?: boolean
     locale?: boolean
@@ -3535,6 +3545,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     password?: boolean
+    pin?: boolean
     birthDate?: boolean
     city?: boolean
     locale?: boolean
@@ -3543,7 +3554,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type ChildOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "password" | "birthDate" | "city" | "locale" | "newsPrompt" | "createdAt" | "updatedAt", ExtArgs["result"]["child"]>
+  export type ChildOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "password" | "pin" | "birthDate" | "city" | "locale" | "newsPrompt" | "createdAt" | "updatedAt", ExtArgs["result"]["child"]>
   export type ChildInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     parents?: boolean | Child$parentsArgs<ExtArgs>
     spending?: boolean | Child$spendingArgs<ExtArgs>
@@ -3572,6 +3583,7 @@ export namespace Prisma {
       id: string
       name: string
       password: string
+      pin: string | null
       birthDate: Date | null
       city: string | null
       locale: string | null
@@ -4011,6 +4023,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Child", 'String'>
     readonly name: FieldRef<"Child", 'String'>
     readonly password: FieldRef<"Child", 'String'>
+    readonly pin: FieldRef<"Child", 'String'>
     readonly birthDate: FieldRef<"Child", 'DateTime'>
     readonly city: FieldRef<"Child", 'String'>
     readonly locale: FieldRef<"Child", 'String'>
@@ -15651,6 +15664,7 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     password: 'password',
+    pin: 'pin',
     birthDate: 'birthDate',
     city: 'city',
     locale: 'locale',
@@ -16101,6 +16115,7 @@ export namespace Prisma {
     id?: StringFilter<"Child"> | string
     name?: StringFilter<"Child"> | string
     password?: StringFilter<"Child"> | string
+    pin?: StringNullableFilter<"Child"> | string | null
     birthDate?: DateTimeNullableFilter<"Child"> | Date | string | null
     city?: StringNullableFilter<"Child"> | string | null
     locale?: StringNullableFilter<"Child"> | string | null
@@ -16120,6 +16135,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     password?: SortOrder
+    pin?: SortOrderInput | SortOrder
     birthDate?: SortOrderInput | SortOrder
     city?: SortOrderInput | SortOrder
     locale?: SortOrderInput | SortOrder
@@ -16142,6 +16158,7 @@ export namespace Prisma {
     NOT?: ChildWhereInput | ChildWhereInput[]
     name?: StringFilter<"Child"> | string
     password?: StringFilter<"Child"> | string
+    pin?: StringNullableFilter<"Child"> | string | null
     birthDate?: DateTimeNullableFilter<"Child"> | Date | string | null
     city?: StringNullableFilter<"Child"> | string | null
     locale?: StringNullableFilter<"Child"> | string | null
@@ -16161,6 +16178,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     password?: SortOrder
+    pin?: SortOrderInput | SortOrder
     birthDate?: SortOrderInput | SortOrder
     city?: SortOrderInput | SortOrder
     locale?: SortOrderInput | SortOrder
@@ -16179,6 +16197,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Child"> | string
     name?: StringWithAggregatesFilter<"Child"> | string
     password?: StringWithAggregatesFilter<"Child"> | string
+    pin?: StringNullableWithAggregatesFilter<"Child"> | string | null
     birthDate?: DateTimeNullableWithAggregatesFilter<"Child"> | Date | string | null
     city?: StringNullableWithAggregatesFilter<"Child"> | string | null
     locale?: StringNullableWithAggregatesFilter<"Child"> | string | null
@@ -16928,6 +16947,7 @@ export namespace Prisma {
     id?: string
     name: string
     password: string
+    pin?: string | null
     birthDate?: Date | string | null
     city?: string | null
     locale?: string | null
@@ -16947,6 +16967,7 @@ export namespace Prisma {
     id?: string
     name: string
     password: string
+    pin?: string | null
     birthDate?: Date | string | null
     city?: string | null
     locale?: string | null
@@ -16966,6 +16987,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    pin?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     locale?: NullableStringFieldUpdateOperationsInput | string | null
@@ -16985,6 +17007,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    pin?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     locale?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17004,6 +17027,7 @@ export namespace Prisma {
     id?: string
     name: string
     password: string
+    pin?: string | null
     birthDate?: Date | string | null
     city?: string | null
     locale?: string | null
@@ -17016,6 +17040,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    pin?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     locale?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17028,6 +17053,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    pin?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     locale?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17931,6 +17957,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     password?: SortOrder
+    pin?: SortOrder
     birthDate?: SortOrder
     city?: SortOrder
     locale?: SortOrder
@@ -17943,6 +17970,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     password?: SortOrder
+    pin?: SortOrder
     birthDate?: SortOrder
     city?: SortOrder
     locale?: SortOrder
@@ -17955,6 +17983,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     password?: SortOrder
+    pin?: SortOrder
     birthDate?: SortOrder
     city?: SortOrder
     locale?: SortOrder
@@ -20239,6 +20268,7 @@ export namespace Prisma {
     id?: string
     name: string
     password: string
+    pin?: string | null
     birthDate?: Date | string | null
     city?: string | null
     locale?: string | null
@@ -20257,6 +20287,7 @@ export namespace Prisma {
     id?: string
     name: string
     password: string
+    pin?: string | null
     birthDate?: Date | string | null
     city?: string | null
     locale?: string | null
@@ -20324,6 +20355,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    pin?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     locale?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20342,6 +20374,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    pin?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     locale?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20360,6 +20393,7 @@ export namespace Prisma {
     id?: string
     name: string
     password: string
+    pin?: string | null
     birthDate?: Date | string | null
     city?: string | null
     locale?: string | null
@@ -20378,6 +20412,7 @@ export namespace Prisma {
     id?: string
     name: string
     password: string
+    pin?: string | null
     birthDate?: Date | string | null
     city?: string | null
     locale?: string | null
@@ -20440,6 +20475,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    pin?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     locale?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20458,6 +20494,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    pin?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     locale?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20505,6 +20542,7 @@ export namespace Prisma {
     id?: string
     name: string
     password: string
+    pin?: string | null
     birthDate?: Date | string | null
     city?: string | null
     locale?: string | null
@@ -20523,6 +20561,7 @@ export namespace Prisma {
     id?: string
     name: string
     password: string
+    pin?: string | null
     birthDate?: Date | string | null
     city?: string | null
     locale?: string | null
@@ -20585,6 +20624,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    pin?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     locale?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20603,6 +20643,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    pin?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     locale?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20741,6 +20782,7 @@ export namespace Prisma {
     id?: string
     name: string
     password: string
+    pin?: string | null
     birthDate?: Date | string | null
     city?: string | null
     locale?: string | null
@@ -20759,6 +20801,7 @@ export namespace Prisma {
     id?: string
     name: string
     password: string
+    pin?: string | null
     birthDate?: Date | string | null
     city?: string | null
     locale?: string | null
@@ -20823,6 +20866,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    pin?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     locale?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20841,6 +20885,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    pin?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     locale?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20910,6 +20955,7 @@ export namespace Prisma {
     id?: string
     name: string
     password: string
+    pin?: string | null
     birthDate?: Date | string | null
     city?: string | null
     locale?: string | null
@@ -20928,6 +20974,7 @@ export namespace Prisma {
     id?: string
     name: string
     password: string
+    pin?: string | null
     birthDate?: Date | string | null
     city?: string | null
     locale?: string | null
@@ -21003,6 +21050,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    pin?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     locale?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21021,6 +21069,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    pin?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     locale?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21039,6 +21088,7 @@ export namespace Prisma {
     id?: string
     name: string
     password: string
+    pin?: string | null
     birthDate?: Date | string | null
     city?: string | null
     locale?: string | null
@@ -21057,6 +21107,7 @@ export namespace Prisma {
     id?: string
     name: string
     password: string
+    pin?: string | null
     birthDate?: Date | string | null
     city?: string | null
     locale?: string | null
@@ -21091,6 +21142,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    pin?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     locale?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21109,6 +21161,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    pin?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     locale?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21127,6 +21180,7 @@ export namespace Prisma {
     id?: string
     name: string
     password: string
+    pin?: string | null
     birthDate?: Date | string | null
     city?: string | null
     locale?: string | null
@@ -21145,6 +21199,7 @@ export namespace Prisma {
     id?: string
     name: string
     password: string
+    pin?: string | null
     birthDate?: Date | string | null
     city?: string | null
     locale?: string | null
@@ -21179,6 +21234,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    pin?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     locale?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21197,6 +21253,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    pin?: NullableStringFieldUpdateOperationsInput | string | null
     birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     city?: NullableStringFieldUpdateOperationsInput | string | null
     locale?: NullableStringFieldUpdateOperationsInput | string | null

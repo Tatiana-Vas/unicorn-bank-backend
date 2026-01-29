@@ -2,6 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PrismaService } from '../../common/prisma/prisma.service';
+import { UserRole } from '../enums/user-role.enum';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -14,7 +15,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: any) {
-    const { userId, role } = payload;
+    const { sub: userId, role } = payload;
 
     if (role === 'PARENT') {
       const user = await (this.prisma as any).parent.findUnique({
@@ -29,7 +30,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         userId: user.id,
         email: user.email,
         name: user.name,
-        role: 'PARENT',
+        role: UserRole.PARENT,
       };
     } else if (role === 'CHILD') {
       const child = await (this.prisma as any).child.findUnique({
@@ -43,7 +44,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       return {
         userId: child.id,
         name: child.name,
-        role: 'CHILD',
+        role: UserRole.CHILD,
       };
     }
 

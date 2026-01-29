@@ -134,6 +134,7 @@ exports.Prisma.ChildScalarFieldEnum = {
   id: 'id',
   name: 'name',
   password: 'password',
+  pin: 'pin',
   birthDate: 'birthDate',
   city: 'city',
   locale: 'locale',

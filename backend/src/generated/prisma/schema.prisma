@@ -76,6 +76,7 @@ model Child {
   id         String    @id @default(cuid())
   name       String
   password   String
+  pin        String? // PIN для входа
   birthDate  DateTime?
   city       String?
   locale     String?
